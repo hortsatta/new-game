@@ -5,7 +5,6 @@ export const theme = createTheme({
   theme: {
     colors: {
       background: '#181818',
-
       //semantic colors
       primary100: 'fc0005',
       primary200: '#fcb197',
@@ -13,7 +12,6 @@ export const theme = createTheme({
       primary400: '#ec4a3b',
       primary500: '#e10000',
       primary600: '#c10010',
-
       // brand colors
       primaryLight: '$primary200',
       primaryLightHover: '$primary300',

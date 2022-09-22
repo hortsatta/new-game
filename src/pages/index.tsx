@@ -1,7 +1,8 @@
-import { BaseCarousel } from '@/components/base';
 import type { NextPage } from 'next';
 
+import { BaseCarousel } from '@/components/base';
 import { CarouselType } from '@/types/carousel.type';
+import { fetcher } from '@/utils/fetcher.util';
 
 const items = [
   {
@@ -30,12 +31,30 @@ const items = [
   },
 ];
 
-const Home: NextPage = () => {
-  return (
-    <div>
-      <BaseCarousel items={items} maxWidth='884px' autoplay={false} />
-    </div>
-  );
+const fooQuery = `
+  query Foo {
+    gameProducts {
+      id
+      price
+      discount
+      isActive
+      createdAt
+    }
+  }
+`;
+
+export const getStaticProps = async () => {
+  const data = await fetcher(fooQuery);
+  return {
+    props: { data },
+  };
 };
 
-export default Home;
+const HomePage: NextPage = ({ data: { gameProducts } }: any) => (
+  <div>
+    <pre>{gameProducts.length}</pre>
+    <BaseCarousel items={items} maxWidth='884px' autoplay={false} />
+  </div>
+);
+
+export default HomePage;

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -17,11 +17,13 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": ["src/components/*"],
-      "@/config/*": ["src/config/*"],
       "@/fonts/*": ["src/assets/fonts/*"],
+      "@/graphql": ["src/graphql"],
+      "@/graphql/*": ["src/graphql/*"],
       "@/hooks/*": ["src/assets/hooks/*"],
       "@/images/*": ["src/assets/images/*"],
-      "@/types/*": ["src/types/*"]
+      "@/types/*": ["src/types/*"],
+      "@/utils/*": ["src/utils/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
