@@ -4,6 +4,8 @@ export const theme = createTheme({
   type: 'dark',
   theme: {
     colors: {
+      background: '#181818',
+
       //semantic colors
       primary100: 'fc0005',
       primary200: '#fcb197',

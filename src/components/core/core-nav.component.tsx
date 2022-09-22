@@ -115,6 +115,7 @@ const CoreNav = ({ ...moreProps }) => {
         {mainNavItems.map(({ href, label, Icon }) => (
           <ListItem key={label}>
             <BaseNavLink
+              aria-label={`navigate to ${label}`}
               href={href}
               active={href === currentPathname}
               onActive={setActiveIndicatorPos}

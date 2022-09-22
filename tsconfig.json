@@ -20,7 +20,8 @@
       "@/config/*": ["src/config/*"],
       "@/fonts/*": ["src/assets/fonts/*"],
       "@/hooks/*": ["src/assets/hooks/*"],
-      "@/images/*": ["src/assets/images/*"]
+      "@/images/*": ["src/assets/images/*"],
+      "@/types/*": ["src/types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

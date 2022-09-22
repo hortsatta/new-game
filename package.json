@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.10",
+    "@supabase/supabase-js": "^1.35.6",
     "next": "12.3.0",
     "phosphor-react": "^1.4.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-timer-hook": "^3.0.5"
   },
   "devDependencies": {
     "@types/node": "18.7.16",

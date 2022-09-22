@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useMemo, useRef } from 'react';
 import NextLink from 'next/link';
-import { keyframes, Link, LinkProps } from '@nextui-org/react';
+import { Link, LinkProps } from '@nextui-org/react';
 
 type Props = LinkProps & {
   href: string;
@@ -26,7 +26,7 @@ const initialLinkCss = {
     transform: 'scale(0.76)',
   },
   '&:not(:active)': {
-    transition: 'transform 260ms ease',
+    transition: 'all 260ms ease',
   },
 };
 
@@ -35,6 +35,7 @@ const BaseNavLink = ({
   active,
   children,
   onActive,
+  onPress,
   ...moreProps
 }: Props) => {
   const ref = useRef<any>(null);
