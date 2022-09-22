@@ -1,21 +1,27 @@
+import { ReactNode, useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { Container, Row } from '@nextui-org/react';
-import type { ReactNode } from 'react';
 
 import CoreHeader from './core-header.component';
 import CoreFooter from './core-footer.component';
 import CoreSide from './core-side.component';
 
-const CoreLayout = ({ children }: { children: ReactNode }) => (
-  <Row justify='center'>
-    <CoreSide />
-    <Container fluid>
-      <CoreHeader />
-      <Container as='main' fluid>
-        {children}
+const CoreLayout = ({ children }: { children: ReactNode }) => {
+  const { pathname } = useRouter();
+  const isHome = useMemo(() => pathname === '/', [pathname]);
+
+  return (
+    <Row justify='center'>
+      <CoreSide />
+      <Container fluid>
+        <CoreHeader isHome={isHome} />
+        <Container as='main' fluid>
+          {children}
+        </Container>
+        <CoreFooter />
       </Container>
-      <CoreFooter />
-    </Container>
-  </Row>
-);
+    </Row>
+  );
+};
 
 export default CoreLayout;

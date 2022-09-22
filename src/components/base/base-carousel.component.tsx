@@ -206,8 +206,6 @@ const BaseCarousel = ({
           ))}
         </Inner>
       </Outer>
-      <Button onPress={() => goToSlide(currentIndex - 1)}>Prev</Button>
-      <Button onPress={() => goToSlide(currentIndex + 1)}>Next</Button>
     </Container>
   );
 };

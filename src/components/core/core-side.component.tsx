@@ -12,6 +12,7 @@ const Aside = styled('aside', {
   w: '100px',
   h: '100vh',
   borderRight: '1px solid $primaryBorder',
+  zIndex: 9,
 });
 
 const CoreSide = ({ ...moreProps }) => (

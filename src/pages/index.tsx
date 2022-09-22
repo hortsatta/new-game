@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 
-import { BaseCarousel } from '@/components/base';
+import { BaseCarousel, BaseDivider } from '@/components/base';
 import { CarouselType } from '@/types/carousel.type';
 import { fetcher } from '@/utils/fetcher.util';
 
@@ -52,8 +52,8 @@ export const getStaticProps = async () => {
 
 const HomePage: NextPage = ({ data: { gameProducts } }: any) => (
   <div>
-    <pre>{gameProducts.length}</pre>
     <BaseCarousel items={items} maxWidth='884px' autoplay={false} />
+    <BaseDivider css={{ my: '60px' }} />
   </div>
 );
 
