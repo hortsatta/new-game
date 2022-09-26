@@ -29,11 +29,9 @@ type Game = {
   name: string;
   description: string;
   metacritic: number;
-  metacriticUrl: string;
   released: string;
   tba: boolean;
   bgImage: string;
-  bgImageAdditional: string;
   website: string;
   parentPlatforms: string[];
   platforms: Platform[];
@@ -42,6 +40,8 @@ type Game = {
   genres: Genre[];
   esrbRating: EsrbRating;
   isActive: boolean;
+  bgImageAdditional?: string;
+  metacriticUrl?: string;
 };
 
 export type { Platform, Developer, Publisher, EsrbRating, Game };

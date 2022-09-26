@@ -40,7 +40,6 @@ const Wrapper = styled('div', {
   flexDirection: 'column',
   alignItems: 'center',
   marginInline: 'auto',
-  mb: '10px',
   p: '54px 0',
   maxW: '400px',
   w: '100%',
@@ -55,7 +54,7 @@ const ThumbnailButton = styled('button', {
   bg: '$background',
   borderRadius: '12px',
   cursor: 'pointer',
-  overflow: 'hidden',
+  ov: 'hidden',
   boxShadow: '0px 4px 6px rgba(0,0,0,0.2)',
   '&:hover': {
     '> div:first-child': {

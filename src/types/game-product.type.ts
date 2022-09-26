@@ -5,6 +5,6 @@ export type GameProduct = {
   games: Game[];
   price: number;
   discount: number;
-  createdAt: string;
   isActive: boolean;
+  createdAt: string;
 };

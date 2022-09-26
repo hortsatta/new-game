@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Button, Container, styled } from '@nextui-org/react';
+import { Container, CSS, styled } from '@nextui-org/react';
 import { useStopwatch } from 'react-timer-hook';
 
 import BaseCarouselControls from './base-carousel-controls.component';
@@ -12,15 +12,18 @@ type Props = {
   maxWidth?: any;
   autoplay?: boolean;
   autoplaySpeed?: number;
+  css?: CSS;
 };
 
 const getNumber = (val: string) => Number(val.replace(/[^0-9.]/g, ''));
 const offsetItemLength = 2;
 
 const Outer = styled('div', {
+  pt: '10px',
+  pb: '$8',
   position: 'relative',
   w: '100%',
-  overflow: 'hidden',
+  ov: 'hidden',
 });
 
 const Inner = styled('div', {

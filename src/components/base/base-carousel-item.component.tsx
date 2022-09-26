@@ -16,7 +16,7 @@ const Outer = styled('div', {
   flexShrink: 0,
   borderRadius: '24px',
   boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-  overflow: 'hidden',
+  ov: 'hidden',
   '&:before': {
     content: '',
     display: 'block',

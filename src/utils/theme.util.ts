@@ -1,6 +1,6 @@
-import { createTheme } from '@nextui-org/react';
+import { createTheme, globalCss } from '@nextui-org/react';
 
-export const theme = createTheme({
+const theme = createTheme({
   type: 'dark',
   theme: {
     colors: {
@@ -22,10 +22,22 @@ export const theme = createTheme({
       primaryBorderHover: '$primary100',
       primarySolidHover: '$primary700',
       primarySolidContrast: '$white',
-      primaryShadow: '$primary500',
+      primaryShadow: 'rgba(225,0,0,0.6)',
     },
     fonts: {
       sans: 'primary, sans-serif;',
     },
   },
 });
+
+const globalStyles = globalCss({
+  body: {
+    'h1, h2, h3, h4, h5, h6': { mb: '$2', letterSpacing: '0.1px' },
+    'button.nextui-button': {
+      transition: 'filter 0.2s ease',
+      '&:hover': { filter: 'brightness(120%)' },
+    },
+  },
+});
+
+export { theme, globalStyles };

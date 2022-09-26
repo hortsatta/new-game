@@ -4,6 +4,8 @@ import CoreNav from './core-nav.component';
 
 const Aside = styled('aside', {
   position: 'sticky',
+  left: 0,
+  top: 0,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
