@@ -3,8 +3,9 @@ import type { Game } from './game.type';
 export type GameProduct = {
   id: number;
   games: Game[];
-  price: number;
   discount: number;
+  price: number;
+  finalPrice: number;
   isActive: boolean;
   createdAt: string;
 };

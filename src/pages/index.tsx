@@ -1,9 +1,11 @@
+import { Row } from '@nextui-org/react';
+import SimpleBar from 'simplebar-react';
 import type { NextPage } from 'next';
 
-import { BaseCarousel, BaseDivider } from '@/components/base';
 import { CarouselType } from '@/types/carousel.type';
 import { fetcher } from '@/utils/fetcher.util';
-import { GameProductCard } from '@/components/game-product';
+import { BaseCarousel, BaseDivider, BaseTitle } from '@/components/base';
+import { GameProductList } from '@/components/game-product';
 
 const items = [
   {
@@ -32,76 +34,66 @@ const items = [
   },
 ];
 
-const fooQuery = `
-  query Foo {
-    gameProducts {
+const query = `
+  query HomeQuery($released: FilterInput) {
+    newReleasesGameProducts: gameProducts(filter: {
+      limit: 10
+      released: $released
+    }) {
       id
-      price
       discount
-      isActive
-      createdAt
+      price
+      finalPrice
+      games {
+        id
+        slug
+        name
+        metaScore
+        released
+        bgImage
+        website
+        parentPlatforms
+        developers { name }
+        publishers { name }
+        genres { name }
+        esrbRating { name, slug }
+        bgImageOffsetPosX
+        backdropOpacity
+      }
     }
   }
 `;
 
 export const getStaticProps = async () => {
-  const data = await fetcher(fooQuery);
+  const today = new Date(new Date().setHours(0, 0, 0, 0)).toISOString();
+  const data = await fetcher(query, { released: { lte: today } });
   return {
     props: { data },
   };
 };
 
-const HomePage: NextPage = ({ data: { gameProducts } }: any) => (
+const HomePage: NextPage = ({ data: { newReleasesGameProducts } }: any) => (
   <div>
     <BaseCarousel items={items} maxWidth='884px' autoplay={false} />
     <BaseDivider css={{ mt: '44px', mb: '60px' }} />
-    <GameProductCard
-      gameProduct={{
-        id: 1,
-        price: 59.99,
-        discount: 0,
-        createdAt: '2022-09-02',
-        isActive: true,
-        games: [
-          {
-            id: 1,
-            slug: 'cult',
-            name: 'Cult of the Lamb',
-            description: 'Meme',
-            metacritic: 90,
-            released: '2022-09-02',
-            tba: false,
-            bgImage:
-              'https://media.rawg.io/media/resize/1280/-/games/400/4002e3aa52cf33d184f0f74cc2348134.jpg',
-            website: 'https://cultofthelamb.com/',
-            parentPlatforms: ['playstation', 'xbox', 'nintendo', 'pc'],
-            platforms: [
-              { slug: 'Xbox One', name: 'xbox-one' },
-              { slug: 'Xbox Series S/X', name: 'xbox-series-x' },
-              { slug: 'PlayStation 5', name: 'playStation5' },
-              { slug: 'Nintendo Switch', name: 'nintendo-switch' },
-              { slug: 'PC', name: 'pc' },
-            ],
-            developers: [
-              { name: 'Vicarious Visions', slug: 'vicarious-visions' },
-            ],
-            publishers: [
-              { name: 'Activision Blizzard', slug: 'activision-blizzard' },
-              {
-                name: 'Blizzard Entertainment',
-                slug: 'blizzard-entertainment',
-              },
-            ],
-            genres: [
-              { name: 'Action', slug: 'action' },
-              { name: 'RPG', slug: 'role-playing-games-rpg' },
-            ],
-            esrbRating: { name: 'Adults Only', slug: 'adults-only' },
-            isActive: true,
-          },
-        ],
-      }}
-    />
+    <section>
+      <Row justify='space-between'>
+        <BaseTitle>New Releases</BaseTitle>
+      </Row>
+      <SimpleBar style={{ width: '100%' }}>
+        <GameProductList
+          css={{
+            flexWrap: 'nowrap',
+            py: '20px',
+            '> div:not(last-child)': {
+              mr: '20px',
+            },
+          }}
+          gap={0}
+          gameProducts={newReleasesGameProducts}
+        />
+      </SimpleBar>
+    </section>
   </div>
 );
 

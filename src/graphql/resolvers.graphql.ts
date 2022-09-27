@@ -10,7 +10,11 @@ const resolvers = {
       _context: any,
       _info: any
     ) => {
-      const { limit } = _args || {};
+      const { limit, released: releasedFilter } = _args?.filter || {};
+      const { field: fieldSort, order: orderSort } = _args?.sort || {
+        field: 'released',
+        order: 'desc',
+      };
 
       const { data: gpData, error } = await _context.supabase
         .from('game_product')
@@ -30,7 +34,7 @@ const resolvers = {
 
       const { data: gameData } = await _context.supabase
         .from('game')
-        .select('id, slug')
+        .select('id, slug, bg_image_offset_pos_x, backdrop_opacity')
         .is('is_active', true)
         .in('id', gameIds);
 
@@ -62,19 +66,21 @@ const resolvers = {
 
             return {
               id: g.id,
+              bgImageOffsetPosX: g.bg_image_offset_pos_x,
+              backdropOpacity: g.backdrop_opacity || 0.6,
               slug,
               name,
               description,
-              metacritic,
+              metaScore: +metacritic / 2 / 10,
               metacriticUrl: metacritic_url,
               released,
               tba,
               bgImage: background_image,
               bgImageAdditional: background_image_additional,
               website,
-              parentPlatforms: parent_platforms.map(
-                ({ platform }: any) => platform.slug
-              ),
+              parentPlatforms: parent_platforms
+                .map(({ platform }: any) => platform.slug)
+                .filter((p: string) => p !== 'mac' && p !== 'linux'),
               platforms: platforms.map(({ platform }: any) => ({
                 slug: platform.slug,
                 name: platform.name,
@@ -98,20 +104,63 @@ const resolvers = {
         })
       );
 
-      const gameProducts: GameProduct[] = gpData.map(
-        ({ created_at, is_active, game_id, ...moreGp }: any) => {
-          const games = game_id.map((id: number) =>
-            gameDetails.find((gd: any) => gd.id === id)
-          );
+      const gameProducts: GameProduct[] = gpData
+        .map(
+          ({
+            created_at,
+            is_active,
+            game_id,
+            discount: initialDiscount,
+            price,
+            ...moreGp
+          }: any) => {
+            const discount =
+              initialDiscount > 0
+                ? Math.min(Math.max(initialDiscount, 0), 100)
+                : 0;
 
-          return {
-            ...moreGp,
-            createdAt: created_at,
-            isActive: is_active,
-            games,
-          };
-        }
-      );
+            const finalPrice = Number(
+              !!discount
+                ? (price * ((100 - discount) / 100)).toFixed(2)
+                : price.toFixed(2)
+            );
+
+            const games = game_id.map((id: number) =>
+              gameDetails.find((gd: any) => gd.id === id)
+            );
+
+            return {
+              ...moreGp,
+              createdAt: created_at,
+              isActive: is_active,
+              discount,
+              price,
+              finalPrice,
+              games,
+            };
+          }
+        )
+        .filter((gp: GameProduct) => {
+          const { lte } = releasedFilter || {};
+
+          if (lte) {
+            const valid = !gp.games.find(
+              (g) => !g.released || new Date(g.released) >= new Date(lte)
+            );
+            if (!valid) {
+              return false;
+            }
+          }
+
+          return true;
+        })
+        .sort((gbA: GameProduct, gbB: GameProduct) => {
+          return orderSort === 'desc'
+            ? +new Date(gbB.games[0].released) -
+                +new Date(gbA.games[0].released)
+            : +new Date(gbA.games[0].released) -
+                +new Date(gbB.games[0].released);
+        });
 
       return gameProducts;
     },

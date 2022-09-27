@@ -32,6 +32,7 @@ const theme = createTheme({
 
 const globalStyles = globalCss({
   body: {
+    '.simplebar-scrollbar::before': { bg: 'rgba(193,0,16,0.6)' },
     'h1, h2, h3, h4, h5, h6': { mb: '$2', letterSpacing: '0.1px' },
     'button.nextui-button': {
       transition: 'filter 0.2s ease',

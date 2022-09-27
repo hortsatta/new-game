@@ -93,17 +93,15 @@ const infoRowTitleCss = {
 };
 
 const GameProductCardInfo = ({
-  gameProduct: { price, discount, games },
+  gameProduct: { discount, price, finalPrice, games },
   onAddToCart,
   onAddToFavorites,
 }: Props) => {
-  const metaScore = games[0].metacritic / 2 / 10;
-  const metaStars = [...Array(Math.floor(metaScore)).keys()];
+  const metaStars = [...Array(Math.floor(games[0].metaScore)).keys()];
   const metaLastStar =
-    (metaScore % 1) * 10 >= 5 ? Math.floor((metaScore % 1) * 10) : 0;
-  const finalPrice = !!discount
-    ? (price * ((100 - Math.min(Math.max(discount, 0), 100)) / 100)).toFixed(2)
-    : price.toFixed(2);
+    (games[0].metaScore % 1) * 10 >= 5
+      ? Math.floor((games[0].metaScore % 1) * 10)
+      : 0;
 
   return (
     <Outer className='info'>
@@ -114,7 +112,7 @@ const GameProductCardInfo = ({
               {games[0].parentPlatforms.map((pp, index) => (
                 <Image
                   key={index}
-                  containerCss={{ mr: '$5', h: '16px' }}
+                  containerCss={{ marginInline: '0 $5', h: '16px' }}
                   src={`/images/plat-${pp}.svg`}
                   alt={pp}
                 />
@@ -161,7 +159,7 @@ const GameProductCardInfo = ({
                 }}
                 color='success'
               >
-                {discount >= 100 ? 'free' : `${discount}% off`}
+                {discount}% off
               </Badge>
             )}
             <Row {...(!discount && { css: { py: '14px' } })}>
@@ -180,23 +178,34 @@ const GameProductCardInfo = ({
                 </Text>
               )}
               <Text
-                css={{ fontSize: '26px', lineHeight: 1 }}
-                weight='medium'
+                css={{
+                  textTransform: 'uppercase',
+                  fontSize: '26px',
+                  lineHeight: 1,
+                  opacity: 0.8,
+                }}
+                weight='semibold'
                 span
               >
-                <Text
-                  css={{
-                    display: 'inline-block',
-                    mr: '$1',
-                    fontSize: '14px',
-                    transform: 'translateY(-6px)',
-                  }}
-                  weight='medium'
-                  small
-                >
-                  $
-                </Text>
-                {finalPrice}
+                {finalPrice > 0 ? (
+                  <>
+                    <Text
+                      css={{
+                        display: 'inline-block',
+                        mr: '$1',
+                        fontSize: '14px',
+                        transform: 'translateY(-6px)',
+                      }}
+                      weight='semibold'
+                      small
+                    >
+                      $
+                    </Text>
+                    {finalPrice}
+                  </>
+                ) : (
+                  'Free'
+                )}
               </Text>
             </Row>
           </Price>
@@ -225,7 +234,14 @@ const GameProductCardInfo = ({
             </Text>
             <Link
               href={games[0].website}
-              css={{ fontSize: '$xs' }}
+              css={{
+                maxWidth: '200px',
+                display: 'inline-block',
+                fontSize: '$xs',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                ov: 'hidden',
+              }}
               color='text'
               target='_blank'
             >
@@ -258,12 +274,14 @@ const GameProductCardInfo = ({
                 ghost
               />
             </Row>
-            <Image
-              src={`/images/esrb-${games[0].esrbRating.slug}.png`}
-              alt={games[0].esrbRating.name}
-              width={30}
-              height={40}
-            />
+            {games[0].esrbRating && (
+              <Image
+                src={`/images/esrb-${games[0].esrbRating.slug}.png`}
+                alt={games[0].esrbRating.name}
+                width={30}
+                height={40}
+              />
+            )}
           </Row>
         </Fold>
       </Inner>

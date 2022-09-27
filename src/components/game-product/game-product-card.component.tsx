@@ -41,6 +41,7 @@ const Outer = styled('div', {
     transition: 'opacity 0.12s ease-in-out',
   },
   '&:hover': {
+    cursor: 'crosshair',
     '&::before, &::after': { opacity: 1 },
     '.info': { mb: 0 },
     '.info-fold': { display: 'block' },
@@ -82,7 +83,7 @@ const TitleWrapper = styled('div', {
   px: '20px',
 });
 
-const GameProdutCard = ({ gameProduct, ...moreProps }: Props) => {
+const GameProductCard = ({ gameProduct, ...moreProps }: Props) => {
   const { games } = gameProduct;
   const dev = games[0].developers[0]?.name || '';
   const pub = games[0].publishers[0]?.name || '';
@@ -98,8 +99,9 @@ const GameProdutCard = ({ gameProduct, ...moreProps }: Props) => {
           height={550}
           objectFit='cover'
           css={{
-            transform: 'scale(1)',
+            objectPosition: `${games[0].bgImageOffsetPosX || 50}% 50%`,
             opacity: 1,
+            transform: 'scale(1)',
             transition: 'all 0.3s ease-in-out',
           }}
           containerCss={{
@@ -113,7 +115,7 @@ const GameProdutCard = ({ gameProduct, ...moreProps }: Props) => {
               left: 0,
               w: '100%',
               h: '100%',
-              linearGradient: '0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 50%',
+              linearGradient: `0deg, rgba(0,0,0,${games[0].backdropOpacity}) 0%, rgba(0,0,0,0) 50%`,
               zIndex: 1,
             },
           }}
@@ -123,7 +125,8 @@ const GameProdutCard = ({ gameProduct, ...moreProps }: Props) => {
             <Text
               className='game-title'
               css={{
-                mb: '-18px',
+                mb: '-15px',
+                lineHeight: 1.2,
                 transition: 'margin 0.2s ease-in-out 0.3s',
               }}
               h3
@@ -153,4 +156,4 @@ const GameProdutCard = ({ gameProduct, ...moreProps }: Props) => {
   );
 };
 
-export default GameProdutCard;
+export default GameProductCard;

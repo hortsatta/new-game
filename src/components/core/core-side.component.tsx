@@ -3,7 +3,7 @@ import CoreLogo from './core-logo.component';
 import CoreNav from './core-nav.component';
 
 const Aside = styled('aside', {
-  position: 'sticky',
+  position: 'fixed',
   left: 0,
   top: 0,
   display: 'flex',
