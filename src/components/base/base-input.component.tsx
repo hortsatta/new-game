@@ -1,8 +1,10 @@
 import { Input, styled } from '@nextui-org/react';
 
-const BaseInput = styled(Input, {
-  'input::placeholder': { color: 'rgba(255,255,255,0.5)' },
-  '> label:not(.nextui-input-wrapper--underlined):not(.nextui-input-wrapper--bordered)':
+const baseInputCss = {
+  'input::placeholder': {
+    color: 'rgba(255,255,255,0.5)',
+  },
+  '> .nextui-input-wrapper:not(.nextui-input-wrapper--underlined):not(.nextui-input-wrapper--bordered)':
     { bg: 'rgba(255,255,255,0.1)' },
   '.nextui-input-content--left': {
     w: '22px',
@@ -10,6 +12,9 @@ const BaseInput = styled(Input, {
     pr: '$2',
     opacity: 0.6,
   },
-});
+};
 
+const BaseInput: any = styled(Input, baseInputCss);
+
+export { baseInputCss };
 export default BaseInput;

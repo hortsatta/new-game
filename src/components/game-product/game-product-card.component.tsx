@@ -1,4 +1,5 @@
-import { styled, Image, Text } from '@nextui-org/react';
+import NextLink from 'next/link';
+import { styled, Image, Link, Text } from '@nextui-org/react';
 import GameProductCardInfo from './game-product-card-info.component';
 import type { GameProduct } from '@/types/game-product.type';
 
@@ -94,7 +95,7 @@ const GameProductCard = ({ gameProduct, ...moreProps }: Props) => {
         <Image
           className='bg-image'
           src={games[0].bgImage}
-          alt='name.toLowerCase()'
+          alt={games[0].name.toLowerCase()}
           width={344}
           height={550}
           objectFit='cover'
@@ -122,17 +123,21 @@ const GameProductCard = ({ gameProduct, ...moreProps }: Props) => {
         />
         <Article>
           <TitleWrapper>
-            <Text
-              className='game-title'
-              css={{
-                mb: '-15px',
-                lineHeight: 1.2,
-                transition: 'margin 0.2s ease-in-out 0.3s',
-              }}
-              h3
-            >
-              {games[0].name}
-            </Text>
+            <NextLink href={`/games/${games[0].slug}`} passHref>
+              <Link color='text' underline>
+                <Text
+                  className='game-title'
+                  css={{
+                    mb: '-15px',
+                    lineHeight: 1.2,
+                    transition: 'margin 0.2s ease-in-out 0.3s',
+                  }}
+                  h3
+                >
+                  {games[0].name}
+                </Text>
+              </Link>
+            </NextLink>
             <Text
               className='game-devpub'
               css={{

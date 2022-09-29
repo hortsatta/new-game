@@ -1,11 +1,9 @@
-import { Row } from '@nextui-org/react';
-import SimpleBar from 'simplebar-react';
 import type { NextPage } from 'next';
 
 import { CarouselType } from '@/types/carousel.type';
 import { fetcher } from '@/utils/fetcher.util';
-import { BaseCarousel, BaseDivider, BaseTitle } from '@/components/base';
-import { GameProductList } from '@/components/game-product';
+import { BaseCarousel, BaseDivider } from '@/components/base';
+import { HomeNewReleasesList } from '@/components/home';
 
 const items = [
   {
@@ -76,24 +74,7 @@ const HomePage: NextPage = ({ data: { newReleasesGameProducts } }: any) => (
   <div>
     <BaseCarousel items={items} maxWidth='884px' autoplay={false} />
     <BaseDivider css={{ mt: '44px', mb: '60px' }} />
-    <section>
-      <Row justify='space-between'>
-        <BaseTitle>New Releases</BaseTitle>
-      </Row>
-      <SimpleBar style={{ width: '100%' }}>
-        <GameProductList
-          css={{
-            flexWrap: 'nowrap',
-            py: '20px',
-            '> div:not(last-child)': {
-              mr: '20px',
-            },
-          }}
-          gap={0}
-          gameProducts={newReleasesGameProducts}
-        />
-      </SimpleBar>
-    </section>
+    <HomeNewReleasesList gameProducts={newReleasesGameProducts} />
   </div>
 );
 

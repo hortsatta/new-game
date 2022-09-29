@@ -56,7 +56,7 @@ const BaseNavLink = ({
   }, [active]);
 
   return (
-    <NextLink href={href}>
+    <NextLink href={href} passHref>
       <Link ref={ref} css={linkProps} {...moreProps}>
         {children}
       </Link>

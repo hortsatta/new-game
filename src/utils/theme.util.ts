@@ -38,6 +38,10 @@ const globalStyles = globalCss({
       transition: 'filter 0.2s ease',
       '&:hover': { filter: 'brightness(120%)' },
     },
+    'label.nextui-input-block-label': {
+      color: 'rgba(255,255,255,0.5)',
+      lineHeight: 1.8,
+    },
   },
 });
 

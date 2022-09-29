@@ -1,5 +1,6 @@
 import { createServer } from '@graphql-yoga/node';
-import { resolvers, typeDefs } from '@/graphql';
+import { typeDefs } from '@/graphql/type-defs';
+import { resolvers } from '@/graphql/resolvers';
 import { supabase } from '@/utils/supabase-client.util';
 
 const server = createServer({

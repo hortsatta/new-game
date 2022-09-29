@@ -43,7 +43,7 @@ const mainNavItems = [
 const secondaryNavItems = [
   { href: '/cart', label: 'Cart', Icon: FlyingSaucer },
   { href: '/favorites', label: 'Favorites', Icon: Brain },
-  { href: '/account', label: 'Account', Icon: Skull },
+  { href: '/user', label: 'User', Icon: Skull },
 ];
 
 const iconProps = {

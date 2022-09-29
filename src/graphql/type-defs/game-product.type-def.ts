@@ -1,24 +1,4 @@
-const typeDefs = `
-  enum Sort {
-    asc
-    desc
-  }
-
-  enum GameProductSortField {
-    name
-    released
-  }
-
-  interface Node {
-    id: ID!
-  }
-
-  type User {
-    id: ID!
-    name: String!
-    status: String!
-  }
-
+export const gameProductTypeDef = `
   type Platform {
     slug: String
     name: String
@@ -77,10 +57,6 @@ const typeDefs = `
     createdAt: String
   }
 
-  input FilterInput {
-    lte: String
-  }
-
   input GameProductFilterInput {
     limit: Int
     released: FilterInput
@@ -91,11 +67,4 @@ const typeDefs = `
     field: GameProductSortField
     order: Sort
   }
-
-  type Query {
-    viewer: User
-    gameProducts(filter: GameProductFilterInput, sort: GameProductSortInput): [GameProduct]
-  }
 `;
-
-export default typeDefs;
