@@ -10,7 +10,7 @@ type Props = LinkProps & {
 };
 
 const initialLinkCss = {
-  display: 'flex',
+  d: 'flex',
   justifyContent: 'center',
   px: '10px',
   w: '100%',

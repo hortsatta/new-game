@@ -19,7 +19,7 @@ const Outer = styled('div', {
   ov: 'hidden',
   '&:before': {
     content: '',
-    display: 'block',
+    d: 'block',
     width: '100%',
   },
 });

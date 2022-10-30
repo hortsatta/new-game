@@ -42,10 +42,9 @@ const Outer = styled('div', {
     transition: 'opacity 0.12s ease-in-out',
   },
   '&:hover': {
-    cursor: 'crosshair',
     '&::before, &::after': { opacity: 1 },
     '.info': { mb: 0 },
-    '.info-fold': { display: 'block' },
+    '.info-fold': { d: 'block' },
     '.bg-image img': {
       transform: 'scale(1.1)',
       opacity: '0.6',
@@ -72,7 +71,7 @@ const Inner = styled('div', {
 
 const Article = styled('article', {
   position: 'relative',
-  display: 'flex',
+  d: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-end',
   w: '100%',

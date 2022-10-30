@@ -36,7 +36,7 @@ const glitterAnimation = keyframes({
 });
 
 const Wrapper = styled('div', {
-  display: 'flex',
+  d: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   marginInline: 'auto',

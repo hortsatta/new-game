@@ -4,12 +4,12 @@ import type { GameProduct } from '@/types/game-product.type';
 
 export const gameProducts = async (
   _parent: any,
-  _args: any,
+  { filter, sort }: any,
   _context: any,
   _info: any
 ) => {
-  const { limit, released: releasedFilter } = _args?.filter || {};
-  const { field: fieldSort, order: orderSort } = _args?.sort || {
+  const { limit, released: releasedFilter } = filter || {};
+  const { field: fieldSort, order: orderSort } = sort || {
     field: 'released',
     order: 'desc',
   };
@@ -97,7 +97,7 @@ export const gameProducts = async (
             : null,
         };
       } catch (error: any) {
-        throw new Error(error);
+        throw new GraphQLYogaError(`Error: ${error.message}`);
       }
     })
   );

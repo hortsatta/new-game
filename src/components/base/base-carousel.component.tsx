@@ -32,7 +32,7 @@ const Outer = styled('div', {
 
 const Inner = styled('div', {
   position: 'relative',
-  display: 'flex',
+  d: 'flex',
   alignItems: 'center',
   transition: 'transform 1s ease',
 });
@@ -118,7 +118,6 @@ const BaseCarousel = ({
   );
 
   useEffect(() => {
-    console.log(autoplaySeconds);
     if (autoplaySeconds * 1000 < autoplaySpeed) {
       return;
     }

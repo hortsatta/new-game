@@ -48,11 +48,11 @@ const Inner = styled('div', {
 
 const Fold = styled('div', {
   w: '100%',
-  display: 'none',
+  d: 'none',
 });
 
 const InfoRow = styled('div', {
-  display: 'flex',
+  d: 'flex',
   justifyContent: 'space-between',
   alignItems: 'flex-end',
   minHeight: '35px',
@@ -60,7 +60,7 @@ const InfoRow = styled('div', {
 });
 
 const Price = styled('div', {
-  display: 'flex',
+  d: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'flex-end',
@@ -71,7 +71,7 @@ const PatternRow = styled('div', {
   borderBottom: '1px solid rgba(255,255,255,0.15)',
   '&::after': {
     content: '',
-    display: 'block',
+    d: 'block',
     w: '100%',
     h: '24px',
     bg: 'url(/images/bg-pattern.svg) 0 50% repeat-x',
@@ -90,6 +90,12 @@ const infoRowTitleCss = {
   fontSize: '11px',
   fontWeight: 500,
   textTransform: 'uppercase',
+};
+
+const buttonCss = {
+  w: '60px',
+  h: '40px',
+  minWidth: 'auto',
 };
 
 const GameProductCardInfo = ({
@@ -191,7 +197,7 @@ const GameProductCardInfo = ({
                   <>
                     <Text
                       css={{
-                        display: 'inline-block',
+                        d: 'inline-block',
                         mr: '$1',
                         fontSize: '14px',
                         transform: 'translateY(-6px)',
@@ -236,7 +242,7 @@ const GameProductCardInfo = ({
               href={games[0].website}
               css={{
                 maxWidth: '200px',
-                display: 'inline-block',
+                d: 'inline-block',
                 fontSize: '$xs',
                 whiteSpace: 'nowrap',
                 textOverflow: 'ellipsis',
@@ -253,7 +259,7 @@ const GameProductCardInfo = ({
             <Row>
               <Button
                 aria-label='add to cart'
-                css={{ mr: '10px', w: '60px', h: '40px' }}
+                css={{ mr: '10px', ...buttonCss }}
                 color='primary'
                 icon={<FlyingSaucer weight='light' size={28} />}
                 onClick={onAddToCart}
@@ -262,10 +268,7 @@ const GameProductCardInfo = ({
               />
               <Button
                 aria-label='add to favorites'
-                css={{
-                  w: '60px',
-                  h: '40px',
-                }}
+                css={buttonCss}
                 color='secondary'
                 icon={<Brain size={28} />}
                 onClick={onAddToFavorites}

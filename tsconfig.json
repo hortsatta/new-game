@@ -20,7 +20,7 @@
       "@/fonts/*": ["src/assets/fonts/*"],
       "@/graphql": ["src/graphql"],
       "@/graphql/*": ["src/graphql/*"],
-      "@/hooks/*": ["src/assets/hooks/*"],
+      "@/hooks/*": ["src/hooks/*"],
       "@/images/*": ["src/assets/images/*"],
       "@/types/*": ["src/types/*"],
       "@/utils/*": ["src/utils/*"]

@@ -6,6 +6,6 @@ export type GameProduct = {
   discount: number;
   price: number;
   finalPrice: number;
-  isActive: boolean;
-  createdAt: string;
+  isActive?: boolean;
+  createdAt?: string;
 };

@@ -5,14 +5,16 @@ const theme = createTheme({
   theme: {
     colors: {
       background: '#181818',
-      //semantic colors
-      primary100: 'fc0005',
+      foreground: '#ffffff80',
+      errorLight: '#4e051f',
+      //semantic
+      primary100: '#fc0005',
       primary200: '#fcb197',
       primary300: '#f67b62',
       primary400: '#ec4a3b',
       primary500: '#e10000',
       primary600: '#c10010',
-      // brand colors
+      // brand
       primaryLight: '$primary200',
       primaryLightHover: '$primary300',
       primaryLightActive: '$primary400',
@@ -23,6 +25,8 @@ const theme = createTheme({
       primarySolidHover: '$primary700',
       primarySolidContrast: '$white',
       primaryShadow: 'rgba(225,0,0,0.6)',
+      accents0: 'rgba(255,255,255,0.1)',
+      accents6: 'rgba(255,255,255,0.5)',
     },
     fonts: {
       sans: 'primary, sans-serif;',
@@ -39,7 +43,6 @@ const globalStyles = globalCss({
       '&:hover': { filter: 'brightness(120%)' },
     },
     'label.nextui-input-block-label': {
-      color: 'rgba(255,255,255,0.5)',
       lineHeight: 1.8,
     },
   },

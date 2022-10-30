@@ -12,7 +12,7 @@ const Header = styled('header', {
   py: '$10',
   h: '40px',
   w: 'calc(100% - 94px)',
-  display: 'flex',
+  d: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   zIndex: 8,

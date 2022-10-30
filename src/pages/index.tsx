@@ -1,9 +1,9 @@
-import type { NextPage } from 'next';
-
 import { CarouselType } from '@/types/carousel.type';
-import { fetcher } from '@/utils/fetcher.util';
+import { gqlFetcher } from '@/utils/gql-fetcher.util';
 import { BaseCarousel, BaseDivider } from '@/components/base';
 import { HomeNewReleasesList } from '@/components/home';
+
+import type { NextPage } from 'next';
 
 const items = [
   {
@@ -64,10 +64,13 @@ const query = `
 
 export const getStaticProps = async () => {
   const today = new Date(new Date().setHours(0, 0, 0, 0)).toISOString();
-  const data = await fetcher(query, { released: { lte: today } });
-  return {
-    props: { data },
-  };
+  try {
+    const data = await gqlFetcher(query, { released: { lte: today } });
+    return { props: { data } };
+  } catch (error) {
+    console.error(error);
+  }
+  return { props: { data: { newReleasesGameProducts: [] } } };
 };
 
 const HomePage: NextPage = ({ data: { newReleasesGameProducts } }: any) => (

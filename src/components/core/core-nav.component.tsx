@@ -15,7 +15,7 @@ import { BaseNavLink } from '@/components/base';
 const Nav = styled('nav', {
   position: 'relative',
   flex: 1,
-  display: 'flex',
+  d: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
   mt: '$10',
@@ -78,6 +78,15 @@ const CoreNav = ({ ...moreProps }) => {
     setIndicatorPos(activeIndicatorPos);
   }, [activeIndicatorPos]);
 
+  const checkActivePath = useCallback(
+    (href: string) => {
+      const parentPath =
+        '/' + (currentPathname.split('/').filter((p) => !!p.trim())[0] || '');
+      return href === parentPath;
+    },
+    [currentPathname]
+  );
+
   const handlePress = useCallback((event: any) => {
     setActiveIndicatorPos(event.target.offsetTop);
   }, []);
@@ -117,7 +126,7 @@ const CoreNav = ({ ...moreProps }) => {
             <BaseNavLink
               aria-label={`navigate to ${label}`}
               href={href}
-              active={href === currentPathname}
+              active={checkActivePath(href)}
               onActive={setActiveIndicatorPos}
               onPress={handlePress}
               onMouseEnter={handleMouseEnter}
@@ -132,8 +141,9 @@ const CoreNav = ({ ...moreProps }) => {
         {secondaryNavItems.map(({ href, label, Icon }) => (
           <ListItem key={label}>
             <BaseNavLink
+              aria-label={`navigate to ${label}`}
               href={href}
-              active={href === currentPathname}
+              active={checkActivePath(href)}
               onActive={setActiveIndicatorPos}
               onPress={handlePress}
               onMouseEnter={handleMouseEnter}

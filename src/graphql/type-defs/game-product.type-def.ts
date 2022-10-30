@@ -1,4 +1,9 @@
 export const gameProductTypeDef = `
+  enum GameProductSortField {
+    name
+    released
+  }
+
   type Platform {
     slug: String
     name: String
@@ -24,7 +29,7 @@ export const gameProductTypeDef = `
     name: String
   }
 
-  type Game implements Node {
+  type Game implements Node & AuditTrail {
     id: ID!
     slug: String
     name: String
@@ -42,12 +47,13 @@ export const gameProductTypeDef = `
     publishers: [Publisher]
     genres: [Genre]
     esrbRating: EsrbRating
-    isActive: Boolean
     bgImageOffsetPosX: Float
     backdropOpacity: Float
+    isActive: Boolean
+    createdAt: String
   }
 
-  type GameProduct implements Node {
+  type GameProduct implements Node & AuditTrail {
     id: ID!
     games: [Game]
     discount: Float

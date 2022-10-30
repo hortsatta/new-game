@@ -6,7 +6,7 @@ const Aside = styled('aside', {
   position: 'fixed',
   left: 0,
   top: 0,
-  display: 'flex',
+  d: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   py: '$10',
