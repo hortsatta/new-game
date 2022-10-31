@@ -113,7 +113,7 @@ const UserRegisterForm = ({ loading, onSubmit, ...moreProps }: Props) => {
               'Register'
             )}
           </Button>
-          <NextLink href='/user/login' passHref>
+          <NextLink href='/login' passHref>
             <Link
               aria-label='log in'
               css={{
