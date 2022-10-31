@@ -61,12 +61,8 @@ const RegisterPage: NextPage = ({ data: { userAvatars } }: any) => {
   return (
     <BaseScene>
       {!isRegisterComplete && (
-        <Row
-          css={{ m: '0 auto', maxW: '1366px' }}
-          justify='center'
-          align='center'
-        >
-          <Center>
+        <Row css={{ pt: '$16', m: '0 auto', maxW: '1366px' }} justify='center'>
+          <Center css={{ pt: '$16' }}>
             <Image
               containerCss={{ m: 0, maxW: 'auto', opacity: 0.7 }}
               width={500}
@@ -75,7 +71,7 @@ const RegisterPage: NextPage = ({ data: { userAvatars } }: any) => {
               alt='new game logo'
             />
           </Center>
-          <Center css={{ pt: '$16' }}>
+          <Center>
             <UserRegisterForm loading={loading} onSubmit={handleRegister} />
           </Center>
         </Row>
