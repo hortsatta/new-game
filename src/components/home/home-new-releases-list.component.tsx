@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useRef } from 'react';
+import { useRef } from 'react';
 import { Row, styled } from '@nextui-org/react';
 import SimpleBar from 'simplebar-react';
 import { CaretCircleLeft, CaretCircleRight } from 'phosphor-react';
@@ -28,7 +28,7 @@ const Button = styled('button', {
 const HomeNewReleasesList = ({ gameProducts }: Props) => {
   const scrollbarRef = useRef<any>(null);
 
-  const scrollList = useCallback((event: any, isBack = false) => {
+  const scrollList = (event: any, isBack = false) => {
     event.preventDefault();
     if (!scrollbarRef.current) {
       return;
@@ -37,7 +37,7 @@ const HomeNewReleasesList = ({ gameProducts }: Props) => {
       left: isBack ? -SCROLL_OFFSET : SCROLL_OFFSET,
       behavior: 'smooth',
     });
-  }, []);
+  };
 
   return (
     <section>

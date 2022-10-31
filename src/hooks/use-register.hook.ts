@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { gqlFetcher } from '@/utils/gql-fetcher.util';
@@ -39,7 +39,7 @@ export const useRegister = (): Result => {
   const [isAdditionalInfoComplete, setIsAdditionalInfoComplete] =
     useState(false);
 
-  const register = useCallback(async (registerData: RegisterFormData) => {
+  const register = async (registerData: RegisterFormData) => {
     try {
       setLoading(true);
       const { email, password } = registerData;
@@ -52,31 +52,28 @@ export const useRegister = (): Result => {
       setIsRegisterComplete(false);
       toast.error(`We've encountered a problem, please try again.`);
     }
-  }, []);
+  };
 
-  const upsertUserAccount = useCallback(
-    async (userAccountData: UserAccountFormData) => {
-      const avatarImage = !!userAccountData.avatarImage
-        ? userAccountData.avatarImage[0]
-        : undefined;
+  const upsertUserAccount = async (userAccountData: UserAccountFormData) => {
+    const avatarImage = !!userAccountData.avatarImage
+      ? userAccountData.avatarImage[0]
+      : undefined;
 
-      try {
-        setLoading(true);
-        const data = await gqlFetcher(upsertUserAccountMutation, {
-          data: { ...userAccountData, avatarImage },
-        });
-        setLoading(false);
-        setIsAdditionalInfoComplete(true);
-        return data;
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-        setIsAdditionalInfoComplete(false);
-        toast.error(`We've encountered a problem, please try again.`);
-      }
-    },
-    []
-  );
+    try {
+      setLoading(true);
+      const data = await gqlFetcher(upsertUserAccountMutation, {
+        data: { ...userAccountData, avatarImage },
+      });
+      setLoading(false);
+      setIsAdditionalInfoComplete(true);
+      return data;
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setIsAdditionalInfoComplete(false);
+      toast.error(`We've encountered a problem, please try again.`);
+    }
+  };
 
   return {
     loading,

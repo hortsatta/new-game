@@ -56,7 +56,7 @@ const CoreNav = ({ ...moreProps }) => {
   const { asPath, isReady } = useRouter();
   const indicatorRef = useRef<any>(null);
   const [currentPathname, setCurrentPathname] = useState('/');
-  const [indicatorPos, setIndicatorPos] = useState(0);
+  const [indicatorPos, setIndicatorPos] = useState(-100);
   const [activeIndicatorPos, setActiveIndicatorPos] = useState(0);
   const [isIndicatorMoving, setIsIndicatorMoving] = useState(false);
 
@@ -87,14 +87,14 @@ const CoreNav = ({ ...moreProps }) => {
     [currentPathname]
   );
 
-  const handlePress = useCallback((event: any) => {
+  const handlePress = (event: any) => {
     setActiveIndicatorPos(event.target.offsetTop);
-  }, []);
+  };
 
-  const handleMouseEnter = useCallback((event: any) => {
+  const handleMouseEnter = (event: any) => {
     setIsIndicatorMoving(true);
     setIndicatorPos(event.target.offsetTop);
-  }, []);
+  };
 
   const handleMouseLeave = useCallback(() => {
     setIsIndicatorMoving(false);

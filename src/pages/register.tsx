@@ -1,7 +1,9 @@
 import { useCallback, useState } from 'react';
+import { useRouter } from 'next/router';
 import { Image, Row, styled, Text } from '@nextui-org/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle } from 'phosphor-react';
+import { toast } from 'react-toastify';
 
 import { gqlFetcher } from '@/utils/gql-fetcher.util';
 import { useRegister } from '@/hooks/use-register.hook';
@@ -39,8 +41,14 @@ const Center = styled('div', {
 });
 
 const RegisterPage: NextPage = ({ data: { userAvatars } }: any) => {
-  const { isRegisterComplete, loading, register, upsertUserAccount } =
-    useRegister();
+  const router = useRouter();
+  const {
+    isRegisterComplete,
+    isAdditionalInfoComplete,
+    loading,
+    register,
+    upsertUserAccount,
+  } = useRegister();
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   const handleRegister = useCallback(
@@ -54,8 +62,10 @@ const RegisterPage: NextPage = ({ data: { userAvatars } }: any) => {
   const handleUpsertUserAccount = useCallback(
     async (data: UserInfoFormData) => {
       await upsertUserAccount({ ...data, userId: currentUser.userId });
+      toast.success('Registration completed. Redirecting...');
+      router.push('/');
     },
-    [currentUser, upsertUserAccount]
+    [currentUser, upsertUserAccount, router]
   );
 
   return (
@@ -77,7 +87,7 @@ const RegisterPage: NextPage = ({ data: { userAvatars } }: any) => {
         </Row>
       )}
       <AnimatePresence>
-        {isRegisterComplete && (
+        {isRegisterComplete && !isAdditionalInfoComplete && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -106,7 +116,7 @@ const RegisterPage: NextPage = ({ data: { userAvatars } }: any) => {
               </Center>
               <Center css={{ pl: '$16', justifyContent: 'flex-start' }}>
                 <UserInfoForm
-                  loading={false}
+                  loading={loading}
                   userAvatars={userAvatars}
                   onSubmit={handleUpsertUserAccount}
                 />

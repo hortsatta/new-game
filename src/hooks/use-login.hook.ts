@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { gqlFetcher } from '@/utils/gql-fetcher.util';
@@ -21,7 +21,7 @@ const mutation = `
 export const useLogin = (): Result => {
   const [loading, setLoading] = useState(false);
 
-  const login = useCallback(async (credentials: AuthCredentials) => {
+  const login = async (credentials: AuthCredentials) => {
     try {
       setLoading(true);
       const data = await gqlFetcher(mutation, { ...credentials });
@@ -31,7 +31,7 @@ export const useLogin = (): Result => {
       setLoading(false);
       toast.error(`We've encountered a problem, please try again.`);
     }
-  }, []);
+  };
 
   return {
     loading,
