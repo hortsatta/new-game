@@ -42,7 +42,8 @@ export const useRegister = (): Result => {
   const register = useCallback(async (registerData: RegisterFormData) => {
     try {
       setLoading(true);
-      const data = await gqlFetcher(registerMutation, { ...registerData });
+      const { email, password } = registerData;
+      const data = await gqlFetcher(registerMutation, { email, password });
       setLoading(false);
       setIsRegisterComplete(true);
       return data;
