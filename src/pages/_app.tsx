@@ -1,5 +1,5 @@
 import { NextUIProvider } from '@nextui-org/react';
-import { ToastContainer } from 'react-toastify';
+import { Slide, ToastContainer } from 'react-toastify';
 import type { AppProps } from 'next/app';
 
 import { globalStyles, theme } from '@/utils/theme.util';
@@ -21,6 +21,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <ToastContainer
         theme='dark'
         position='bottom-center'
+        transition={Slide}
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
