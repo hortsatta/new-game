@@ -5,7 +5,7 @@ import type { GameProduct } from '@/types/game-product.type';
 export const gameProducts = async (
   _parent: any,
   { filter, sort }: any,
-  _context: any,
+  { supabase }: any,
   _info: any
 ) => {
   const { limit, released: releasedFilter } = filter || {};
@@ -14,7 +14,7 @@ export const gameProducts = async (
     order: 'desc',
   };
 
-  const { data: gpData, error } = await _context.supabase
+  const { data: gpData, error } = await supabase
     .from('game_product')
     .select('*')
     .is('is_active', true)
@@ -30,7 +30,7 @@ export const gameProducts = async (
     JSON.parse as any
   );
 
-  const { data: gameData } = await _context.supabase
+  const { data: gameData } = await supabase
     .from('game')
     .select('id, slug, bg_image_offset_pos_x, backdrop_opacity')
     .is('is_active', true)

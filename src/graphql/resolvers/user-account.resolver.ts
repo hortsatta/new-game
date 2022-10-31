@@ -1,6 +1,6 @@
-import { supabase } from '@/utils/supabase-client.util';
 import { GraphQLYogaError } from '@graphql-yoga/node';
 import sharp from 'sharp';
+import { serialize } from 'cookie';
 
 import type { AuthCredentials } from '@/types/auth.type';
 import type { FormData } from '@/components/user-account/user-info-form.component';
@@ -53,17 +53,64 @@ const userAvatars = (
   );
 };
 
-const userAccounts = (_parent: any, _args: any, _context: any, _info: any) => {
-  return { id: 1, name: 'John Smith', status: 'cached' };
+const currentUser = async (
+  _parent: any,
+  { token }: { token: string },
+  { supabase, req, res }: any,
+  _info: any
+) => {
+  if (!!token) {
+    const { data, error } = await supabase.auth.getUser(token);
+
+    console.log('data', data);
+
+    if (error) {
+      throw new GraphQLYogaError(error.message);
+    }
+
+    return null;
+  }
+
+  return null;
+};
+
+const login = async (
+  _parent: any,
+  { email, password }: AuthCredentials,
+  { supabase, res }: any,
+  _info: any
+) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    throw new GraphQLYogaError(error.message);
+  }
+
+  // Set cookie
+  res.setHeader(
+    'Set-Cookie',
+    serialize('token', data.session.access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      maxAge: 60 * 60 * 24 * 7,
+      sameSite: 'strict',
+      path: '/',
+    })
+  );
+
+  return null;
 };
 
 const register = async (
   _parent: any,
   { email, password }: AuthCredentials,
-  _context: any,
+  { supabase }: any,
   _info: any
 ) => {
-  const { data: user, error } = await supabase.auth.api.createUser({
+  const { data: user, error } = await supabase.auth.signUp({
     email,
     password,
     email_confirm: true,
@@ -81,7 +128,7 @@ const upsertUserAccount = async (
   {
     data: { avatarType, avatarImage, userId, displayName, fullName },
   }: { data: FormData & { userId: string } },
-  _context: any,
+  { supabase }: any,
   _info: any
 ) => {
   let avatar_image_url = null;
@@ -112,15 +159,15 @@ const upsertUserAccount = async (
     }
   }
 
-  const { data: existingData } = await _context.supabase
+  const { data: existingData } = await supabase
     .from('user_account')
     .select('id')
     .eq('user_id', userId);
 
-  const { data, error } = await _context.supabase
+  const { data, error } = await supabase
     .from('user_account')
     .upsert({
-      ...(existingData.length && { id: existingData[0].id }),
+      ...(existingData?.length && { id: existingData[0].id }),
       avatar_type: avatarType,
       avatar_image_url,
       user_id: userId,
@@ -147,4 +194,4 @@ const upsertUserAccount = async (
   };
 };
 
-export { userAvatars, userAccounts, register, upsertUserAccount };
+export { userAvatars, currentUser, login, register, upsertUserAccount };

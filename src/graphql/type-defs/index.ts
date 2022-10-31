@@ -27,14 +27,14 @@ export const typeDefs = `
   ${userAccountTypeDef}
 
   type Query {
-    userAccounts: UserAccount
     userAvatars(filter: UserAvatarFilterInput): [UserAvatar]
     gameProducts(filter: GameProductFilterInput, sort: GameProductSortInput): [GameProduct]
+    currentUser(token: String): UserAccount
   }
 
   type Mutation {
-    register(email: String, password: String): UserAccount
     login(email: String, password: String): UserAccount
+    register(email: String, password: String): UserAccount
     upsertUserAccount(data: UserAccountUpsertInput): UserAccount
   }
 `;
