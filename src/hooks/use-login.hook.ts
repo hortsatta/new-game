@@ -14,6 +14,8 @@ const mutation = `
     login(email: $email, password: $password) {
       userId
       email
+      displayName
+      fullName
     }
   }
 `;
@@ -24,12 +26,12 @@ export const useLogin = (): Result => {
   const login = async (credentials: AuthCredentials) => {
     try {
       setLoading(true);
-      const data = await gqlFetcher(mutation, { ...credentials });
+      const { login } = await gqlFetcher(mutation, { ...credentials });
       setLoading(false);
-      return data;
+      return login;
     } catch (error) {
       setLoading(false);
-      toast.error(`We've encountered a problem, please try again.`);
+      toast.error('Email or password is incorrect, please try again.');
     }
   };
 

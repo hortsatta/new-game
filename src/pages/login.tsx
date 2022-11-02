@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
+import { useRouter } from 'next/router';
 import { Image, Row, styled } from '@nextui-org/react';
+import { toast } from 'react-toastify';
 
 import { useLogin } from '@/hooks/use-login.hook';
 import { BaseScene } from '@/components/base';
@@ -16,13 +18,18 @@ const Center = styled('div', {
 });
 
 const LoginPage: NextPage = () => {
+  const router = useRouter();
   const { loading, login } = useLogin();
 
   const handleLogin = useCallback(
     async (credentials: AuthCredentials) => {
-      const user = await login(credentials);
+      const data = await login(credentials);
+      if (data) {
+        toast.success(`Aloha, ${data.displayName || data.email}`);
+        router.push('/');
+      }
     },
-    [login]
+    [login, router]
   );
 
   return (
