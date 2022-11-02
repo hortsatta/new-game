@@ -4,6 +4,13 @@ export const gameProductTypeDef = `
     released
   }
 
+  interface IGameProduct {
+    games: [Game]
+    discount: Float
+    price: Float
+    finalPrice: Float
+  }
+
   type Platform {
     slug: String
     name: String
@@ -53,7 +60,7 @@ export const gameProductTypeDef = `
     createdAt: String
   }
 
-  type GameProduct implements Node & AuditTrail {
+  type GameProduct implements IGameProduct & Node & AuditTrail {
     id: ID!
     games: [Game]
     discount: Float

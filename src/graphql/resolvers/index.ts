@@ -1,3 +1,4 @@
+import { carousels } from './carousel.resolver';
 import { gameProducts } from './game-product.resolver';
 import {
   currentUser,
@@ -9,8 +10,9 @@ import {
 
 export const resolvers = {
   Query: {
-    gameProducts,
     userAvatars,
+    gameProducts,
+    carousels,
     currentUser,
   },
   Mutation: {

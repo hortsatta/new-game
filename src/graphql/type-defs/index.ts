@@ -1,3 +1,4 @@
+import { carouselTypeDef } from './carousel.type-def';
 import { gameProductTypeDef } from './game-product.type-def';
 import { userAccountTypeDef } from './user-account.type-def';
 
@@ -26,8 +27,11 @@ export const typeDefs = `
 
   ${userAccountTypeDef}
 
+  ${carouselTypeDef}
+  
   type Query {
     userAvatars(filter: UserAvatarFilterInput): [UserAvatar]
+    carousels(filter: CarouselFilterInput, sort: CarouselSortInput): [Carousel]
     gameProducts(filter: GameProductFilterInput, sort: GameProductSortInput): [GameProduct]
     currentUser(token: String): UserAccount
   }

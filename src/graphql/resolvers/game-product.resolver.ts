@@ -10,15 +10,15 @@ export const gameProducts = async (
 ) => {
   const { limit, released: releasedFilter } = filter || {};
   const { field: fieldSort, order: orderSort } = sort || {
-    field: 'released',
+    field: 'created_at',
     order: 'desc',
   };
 
   const { data: gpData, error } = await supabase
     .from('game_product')
-    .select('*')
+    .select()
     .is('is_active', true)
-    .order('created_at', { ascending: false })
+    .order(fieldSort, { ascending: orderSort !== 'desc' })
     .limit(limit || 1000);
 
   if (error) {

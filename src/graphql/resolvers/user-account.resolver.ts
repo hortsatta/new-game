@@ -36,6 +36,41 @@ const stockUserAvatars = [
 const STORAGE_NAME = 'new-game-bucket';
 const USER_AVATAR_PATH = 'user-avatar/';
 
+const getUserAccountByUserId = async (supabase: any, user: any) => {
+  const { data, error } = await supabase
+    .from('user_account')
+    .select()
+    .is('is_active', true)
+    .eq('user_id', user.id);
+
+  if (error || !data.length) {
+    return { userId: user.id, email: user.email };
+  }
+
+  const {
+    id,
+    user_id,
+    display_name,
+    full_name,
+    avatar_type,
+    avatar_image_url,
+    is_active,
+    created_at,
+  } = data[0];
+
+  return {
+    id: id,
+    userId: user_id,
+    email: user.email,
+    displayName: display_name,
+    fullName: full_name,
+    avatarType: avatar_type,
+    avatarImageUrl: avatar_image_url,
+    isActive: is_active,
+    createdAt: created_at,
+  };
+};
+
 const userAvatars = (
   _parent: any,
   { filter }: any,
@@ -56,22 +91,23 @@ const userAvatars = (
 const currentUser = async (
   _parent: any,
   { token }: { token: string },
-  { supabase, req, res }: any,
+  { supabase }: any,
   _info: any
 ) => {
-  if (!!token) {
-    const { data, error } = await supabase.auth.getUser(token);
-
-    console.log('data', data);
-
-    if (error) {
-      throw new GraphQLYogaError(error.message);
-    }
-
+  if (!token) {
     return null;
   }
 
-  return null;
+  const {
+    data: { user },
+    authError,
+  } = await supabase.auth.getUser(token);
+
+  if (authError || !user) {
+    throw new GraphQLYogaError(authError.message || 'Invalid token');
+  }
+
+  return getUserAccountByUserId(supabase, user);
 };
 
 const login = async (
@@ -80,19 +116,22 @@ const login = async (
   { supabase, res }: any,
   _info: any
 ) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const {
+    data: { session, user },
+    authError,
+  } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
-  if (error) {
-    throw new GraphQLYogaError(error.message);
+  if (authError) {
+    throw new GraphQLYogaError(authError.message);
   }
 
   // Set cookie
   res.setHeader(
     'Set-Cookie',
-    serialize('token', data.session.access_token, {
+    serialize('token', session.access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV !== 'development',
       maxAge: 60 * 60 * 24 * 7,
@@ -101,7 +140,7 @@ const login = async (
     })
   );
 
-  return null;
+  return getUserAccountByUserId(supabase, user);
 };
 
 const register = async (
@@ -110,7 +149,10 @@ const register = async (
   { supabase }: any,
   _info: any
 ) => {
-  const { data: user, error } = await supabase.auth.signUp({
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.signUp({
     email,
     password,
     email_confirm: true,
