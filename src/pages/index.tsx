@@ -1,36 +1,9 @@
-import { CarouselType } from '@/types/carousel.type';
-import { gqlFetcher } from '@/utils/gql-fetcher.util';
-import { BaseCarousel, BaseDivider } from '@/components/base';
-import { HomeNewReleasesList } from '@/components/home';
-
 import type { NextPage } from 'next';
 
-const items = [
-  {
-    type: CarouselType.IMAGE,
-    content: {
-      url: 'https://images6.alphacoders.com/124/1245270.jpg',
-    },
-  },
-  {
-    type: CarouselType.IMAGE,
-    content: {
-      url: 'https://images6.alphacoders.com/124/1245270.jpg',
-    },
-  },
-  {
-    type: CarouselType.IMAGE,
-    content: {
-      url: 'https://images6.alphacoders.com/124/1245270.jpg',
-    },
-  },
-  {
-    type: CarouselType.IMAGE,
-    content: {
-      url: 'https://images6.alphacoders.com/124/1245270.jpg',
-    },
-  },
-];
+import { gqlFetcher } from '@/utils/gql-fetcher.util';
+import { BaseDivider } from '@/components/base';
+import { Carousel } from '@/components/carousel';
+import { HomeNewReleasesList } from '@/components/home';
 
 const query = `
   query HomeQuery($released: FilterInput) {
@@ -59,6 +32,34 @@ const query = `
         backdropOpacity
       }
     }
+    carousels(filter: { limit: 4 }) {
+      id
+      content {
+        type
+        excerpt
+        image {
+          url
+          name
+        }
+        gameProduct {
+          id
+          discount
+          price
+          finalPrice
+          games {
+            id
+            slug
+            name
+            metaScore
+            bgImage
+            parentPlatforms
+            developers { name }
+            publishers { name }
+            description
+          }
+        }
+      }
+    }
   }
 `;
 
@@ -70,12 +71,19 @@ export const getStaticProps = async () => {
   } catch (error) {
     console.error(error);
   }
-  return { props: { data: { newReleasesGameProducts: [] } } };
+  return { props: { data: { newReleasesGameProducts: [], carousels: [] } } };
 };
 
-const HomePage: NextPage = ({ data: { newReleasesGameProducts } }: any) => (
+const HomePage: NextPage = ({
+  data: { newReleasesGameProducts, carousels },
+}: any) => (
   <div>
-    <BaseCarousel items={items} maxWidth='884px' autoplay={false} />
+    <Carousel
+      css={{ position: 'relative' }}
+      items={carousels}
+      maxWidth='884px'
+      autoplaySpeed={8000}
+    />
     <BaseDivider css={{ mt: '44px', mb: '60px' }} />
     <HomeNewReleasesList gameProducts={newReleasesGameProducts} />
   </div>

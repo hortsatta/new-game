@@ -2,6 +2,7 @@ import { GraphQLYogaError } from '@graphql-yoga/node';
 import sharp from 'sharp';
 import { serialize } from 'cookie';
 
+import type { NextApiResponse } from 'next';
 import type { AuthCredentials } from '@/types/auth.type';
 import type { FormData } from '@/components/user-account/user-info-form.component';
 
@@ -71,6 +72,20 @@ const getUserAccountByUserId = async (supabase: any, user: any) => {
   };
 };
 
+const addAuthCookie = (res: NextApiResponse, token: string) => {
+  // Set cookie
+  res.setHeader(
+    'Set-Cookie',
+    serialize('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      maxAge: 60 * 60 * 24 * 7,
+      sameSite: 'strict',
+      path: '/',
+    })
+  );
+};
+
 const userAvatars = (
   _parent: any,
   { filter }: any,
@@ -91,7 +106,7 @@ const userAvatars = (
 const currentUser = async (
   _parent: any,
   { token }: { token: string },
-  { supabase }: any,
+  { supabase, res }: any,
   _info: any
 ) => {
   if (!token) {
@@ -128,18 +143,7 @@ const login = async (
     throw new GraphQLYogaError(authError.message);
   }
 
-  // Set cookie
-  res.setHeader(
-    'Set-Cookie',
-    serialize('token', session.access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV !== 'development',
-      maxAge: 60 * 60 * 24 * 7,
-      sameSite: 'strict',
-      path: '/',
-    })
-  );
-
+  addAuthCookie(res, session.access_token);
   return getUserAccountByUserId(supabase, user);
 };
 
@@ -219,7 +223,6 @@ const upsertUserAccount = async (
     .select();
 
   if (error) {
-    console.log(error);
     throw new GraphQLYogaError(error.message);
   }
 

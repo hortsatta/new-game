@@ -68,7 +68,6 @@ export const useRegister = (): Result => {
       setIsAdditionalInfoComplete(true);
       return data;
     } catch (error) {
-      console.log(error);
       setLoading(false);
       setIsAdditionalInfoComplete(false);
       toast.error(`We've encountered a problem, please try again.`);

@@ -147,8 +147,6 @@ export const carousels = async (
         };
       }
     );
-
-    console.log('carouselData', gameDetails);
   }
 
   return carouselData.map(({ content, ...moreItem }: any, index: number) => {
