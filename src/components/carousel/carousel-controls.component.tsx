@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Image, keyframes, styled } from '@nextui-org/react';
-import { CarouselItem, CarouselType } from '@/types/carousel.type';
+import { CarouselItem } from '@/types/carousel.type';
 
 type Props = {
   items: CarouselItem[];
@@ -47,20 +47,15 @@ const Wrapper = styled('div', {
 
 const ThumbnailButton = styled('button', {
   all: 'unset',
-  position: 'relative',
   marginInline: '10px',
+  position: 'relative',
   w: '75px',
   h: '56px',
-  bg: '$background',
   borderRadius: '12px',
   cursor: 'pointer',
   ov: 'hidden',
-  boxShadow: '0px 4px 6px rgba(0,0,0,0.2)',
-  '&:hover': {
-    '> div:first-child': {
-      bgColor: 'rgba(255,255,255,0.12)',
-      opacity: 1,
-    },
+  '&:hover > div:first-child': {
+    opacity: 1,
   },
 });
 
@@ -68,12 +63,11 @@ const Indicator = styled('div', {
   position: 'absolute',
   top: 0,
   left: 0,
-  w: '100%',
-  h: '100%',
-  bg: 'url(/images/carousel-thumbnail-indicator.svg)',
+  width: '100%',
+  height: '100%',
+  linearGradient: '0deg, rgba(252,0,5,1) 0%, rgba(252,0,5,0) 60%',
   opacity: 0,
-  transition: 'all 0.26s ease',
-  zIndex: 1,
+  transition: 'opacity 0.2s linear',
 });
 
 const SlideDurationWrapper = styled('div', {
@@ -89,7 +83,7 @@ const SlideDuration = styled('div', {
   linearGradient: '90deg, rgba(104,10,8,1) 0%, rgba(200,9,7,1) 100%',
   boxShadow: '0 1px 0 rgba(0,0,0,0.3), 0 0 8px #892020',
   transition: 'width 1s linear',
-  '&:after': {
+  '&::after': {
     content: '',
     position: 'absolute',
     top: '-26px',
@@ -101,7 +95,7 @@ const SlideDuration = styled('div', {
   },
 });
 
-const BaseCarouselControls = ({
+const CarouselControls = ({
   items,
   currentIndex,
   autoplaySpeed,
@@ -122,27 +116,32 @@ const BaseCarouselControls = ({
   return (
     <Wrapper {...moreProps}>
       <div>
-        {items.map(({ index, type, content }) => (
+        {items.map(({ index, content }) => (
           <ThumbnailButton
             key={index}
             aria-label={`go to slide ${index}`}
             onClick={() => onThumbnailPress && onThumbnailPress(index || 0)}
           >
-            <Indicator css={{ opacity: index === currentIndex ? 1 : 0 }} />
+            <Indicator
+              {...(index === currentIndex && { css: { opacity: 1 } })}
+            />
             <Image
               src={
-                type === CarouselType.IMAGE
-                  ? content.url
-                  : content.background_image
+                content.type === 'image'
+                  ? content.image.url
+                  : content.gameProduct.imageUrl ||
+                    content.gameProduct.games[0].bgImage
               }
               alt=''
               objectFit='cover'
               containerCss={{
+                p: '$1',
                 w: '100%',
                 h: '100%',
-                borderRadius: '12px',
+                borderRadius: '16px',
                 filter: `saturate(${index === currentIndex ? 1 : 0.6})`,
                 transition: 'all 0.26s ease',
+                boxShadow: '0px 4px 6px rgba(0,0,0,0.2)',
               }}
             />
           </ThumbnailButton>
@@ -155,4 +154,4 @@ const BaseCarouselControls = ({
   );
 };
 
-export default BaseCarouselControls;
+export default CarouselControls;

@@ -2,17 +2,20 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CSS, styled } from '@nextui-org/react';
 import { useStopwatch } from 'react-timer-hook';
 
-import BaseCarouselControls from './base-carousel-controls.component';
-import BaseCarouselItem from './base-carousel-item.component';
-import type { CarouselItem } from '@/types/carousel.type';
+import CarouselControls from './carousel-controls.component';
+import CarouselImageBackdrop from './carousel-image-backdrop.component';
+import CarouselItem from './carousel-item.component';
+import type { CarouselItem as CarouselItemType } from '@/types/carousel.type';
 
 type Props = {
-  items: CarouselItem[];
+  items: CarouselItemType[];
   ratio?: number;
   maxWidth?: any;
   autoplay?: boolean;
   autoplaySpeed?: number;
   css?: CSS;
+  onAddToCart?: () => void;
+  onAddToFavorites?: () => void;
 };
 
 const getNumber = (val: string) => Number(val.replace(/[^0-9.]/g, ''));
@@ -37,12 +40,14 @@ const Inner = styled('div', {
   transition: 'transform 1s ease',
 });
 
-const BaseCarousel = ({
+const Carousel = ({
   items,
   ratio = 10 / 16,
   maxWidth = 'unset',
   autoplay = true,
   autoplaySpeed = 6000,
+  onAddToCart,
+  onAddToFavorites,
   ...moreProps
 }: Props) => {
   const ref = useRef<any>(null);
@@ -139,7 +144,7 @@ const BaseCarousel = ({
   // Clone items to append and prepend on main items for infinite loop
   const carouselItems = useMemo(() => {
     const beforeItems = [...mainItems].splice(
-      mainItems.length - 1 - offsetLength,
+      mainItems.length - offsetLength,
       offsetLength
     );
     const afterItems = [...mainItems].splice(0, offsetLength);
@@ -188,7 +193,11 @@ const BaseCarousel = ({
 
   return (
     <Wrapper {...moreProps}>
-      <BaseCarouselControls
+      <CarouselImageBackdrop
+        currentIndex={currentIndex}
+        carouselItems={carouselItems}
+      />
+      <CarouselControls
         items={mainItems}
         currentIndex={currentIndex}
         autoplaySpeed={autoplaySpeed}
@@ -198,16 +207,19 @@ const BaseCarousel = ({
       <Outer ref={ref}>
         <Inner css={innerCss}>
           {carouselItems.map((item) => (
-            <BaseCarouselItem
+            <CarouselItem
               {...(item.index === 0 && { ref: itemRef })}
               key={item.index}
               item={item}
               ratio={ratio}
               maxWidth={maxWidth}
               {...(item.index === currentIndex && {
+                css: { filter: 'saturate(1)' },
                 onMouseEnter: handleCarouselMouseEnter,
                 onMouseLeave: handleCarouselMouseLeave,
               })}
+              onAddToCart={onAddToCart}
+              onAddToFavorites={onAddToFavorites}
             />
           ))}
         </Inner>
@@ -216,4 +228,4 @@ const BaseCarousel = ({
   );
 };
 
-export default BaseCarousel;
+export default Carousel;
