@@ -1,4 +1,6 @@
-type UserAccount = {
+import type { AuditTrail } from './base.type';
+
+type UserAccount = AuditTrail & {
   id: number;
   userId: string;
   email: string;
