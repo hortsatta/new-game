@@ -67,7 +67,7 @@ const Indicator = styled('div', {
   height: '100%',
   linearGradient: '0deg, rgba(252,0,5,1) 0%, rgba(252,0,5,0) 60%',
   opacity: 0,
-  transition: 'opacity 0.2s linear',
+  transition: 'opacity 0.12s ease-in-out',
 });
 
 const SlideDurationWrapper = styled('div', {

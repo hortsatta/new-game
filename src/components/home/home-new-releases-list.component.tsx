@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Row, styled } from '@nextui-org/react';
+import { CSS, Row, styled } from '@nextui-org/react';
 import SimpleBar from 'simplebar-react';
 import { CaretCircleLeft, CaretCircleRight } from 'phosphor-react';
 
@@ -9,9 +9,12 @@ import type { GameProduct } from '@/types/game-product.type';
 
 type Props = {
   gameProducts: GameProduct[];
+  css?: CSS;
 };
 
-const SCROLL_OFFSET = 368;
+const SCROLL_OFFSET = 344 + 24;
+
+const Section = styled('section');
 
 const Button = styled('button', {
   all: 'unset',
@@ -25,7 +28,7 @@ const Button = styled('button', {
   '&:hover, &:active': { bg: 'transparent', opacity: 1 },
 });
 
-const HomeNewReleasesList = ({ gameProducts }: Props) => {
+const HomeNewReleasesList = ({ gameProducts, css }: Props) => {
   const scrollbarRef = useRef<any>(null);
 
   const scrollList = (event: any, isBack = false) => {
@@ -40,7 +43,7 @@ const HomeNewReleasesList = ({ gameProducts }: Props) => {
   };
 
   return (
-    <section>
+    <Section css={css}>
       <Row css={{ w: '100%' }} justify='space-between' align='center'>
         <BaseTitle css={{ mb: 0 }}>New Releases</BaseTitle>
         <Row css={{ w: 'fit-content' }}>
@@ -72,7 +75,7 @@ const HomeNewReleasesList = ({ gameProducts }: Props) => {
           gameProducts={gameProducts}
         />
       </SimpleBar>
-    </section>
+    </Section>
   );
 };
 

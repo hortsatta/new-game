@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
-import { Button, CSS, Image, Row, styled, Text } from '@nextui-org/react';
+import NextLink from 'next/link';
+import { Button, CSS, Image, Link, Row, styled, Text } from '@nextui-org/react';
 import { FlyingSaucer, Brain } from 'phosphor-react';
 
 import CarouselGameProductPrice from './/carousel-game-product-price.component';
@@ -10,6 +11,7 @@ type Props = {
   ratio: number;
   maxWidth: any;
   css?: CSS;
+  onClick?: () => void;
   onAddToCart?: () => void;
   onAddToFavorites?: () => void;
 };
@@ -139,14 +141,22 @@ const CarouselItem = forwardRef(
             <ContentWrapper>
               <Content align='flex-end'>
                 <Left>
-                  <Text
-                    css={{ mb: '$3', lineHeight: 1.3 }}
-                    weight='bold'
-                    size='$4xl'
-                    h2
+                  <NextLink
+                    href={`/games/${content.gameProduct.games[0].slug}`}
+                    passHref
                   >
-                    {content.gameProduct.games[0].name}
-                  </Text>
+                    <Link color='text' underline>
+                      <Text
+                        css={{ mb: '$3', lineHeight: 1.3 }}
+                        weight='bold'
+                        size='$4xl'
+                        h2
+                      >
+                        {content.gameProduct.games[0].name}
+                      </Text>
+                    </Link>
+                  </NextLink>
+
                   <Text
                     css={{
                       d: '-webkit-box',

@@ -1,9 +1,10 @@
 import type { NextPage } from 'next';
+import { Image } from '@nextui-org/react';
 
 import { gqlFetcher } from '@/utils/gql-fetcher.util';
 import { BaseDivider } from '@/components/base';
 import { Carousel } from '@/components/carousel';
-import { HomeNewReleasesList } from '@/components/home';
+import { HomeFeaturedGenresList, HomeNewReleasesList } from '@/components/home';
 
 const query = `
   query HomeQuery($released: FilterInput) {
@@ -60,6 +61,12 @@ const query = `
         }
       }
     }
+    genres {
+      id
+      name
+      slug
+      rawgSlug
+    }
   }
 `;
 
@@ -71,11 +78,13 @@ export const getStaticProps = async () => {
   } catch (error) {
     console.error(error);
   }
-  return { props: { data: { newReleasesGameProducts: [], carousels: [] } } };
+  return {
+    props: { data: { carousels: [], newReleasesGameProducts: [], genres: [] } },
+  };
 };
 
 const HomePage: NextPage = ({
-  data: { newReleasesGameProducts, carousels },
+  data: { carousels, newReleasesGameProducts, genres },
 }: any) => (
   <div>
     <Carousel
@@ -85,7 +94,17 @@ const HomePage: NextPage = ({
       autoplaySpeed={8000}
     />
     <BaseDivider css={{ mt: '44px', mb: '60px' }} />
-    <HomeNewReleasesList gameProducts={newReleasesGameProducts} />
+    <HomeNewReleasesList
+      css={{ mb: '40px' }}
+      gameProducts={newReleasesGameProducts}
+    />
+    <HomeFeaturedGenresList css={{ mb: '70px' }} genres={genres} />
+    <Image
+      src={`${process.env.NEXT_PUBLIC_SUPABASE_BUCKET_URL}/intermission.png`}
+      alt='intermission'
+      width={1454}
+      height={397}
+    />
   </div>
 );
 

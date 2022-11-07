@@ -1,4 +1,4 @@
-import { GameProduct } from './game-product.type';
+import type { GameProduct } from './game-product.type';
 
 type CarouseImage = {
   url: string;

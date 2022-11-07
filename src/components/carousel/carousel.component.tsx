@@ -62,6 +62,9 @@ const Carousel = ({
   const [hasTransition, setHasTransition] = useState(true);
 
   useEffect(() => {
+    if (!itemRef.current || !ref.current) {
+      return;
+    }
     // Get and set carousel item size and offset base on parent width
     const carouselStyles = window.getComputedStyle(ref.current);
     const itemStyles = window.getComputedStyle(itemRef.current);
@@ -104,6 +107,7 @@ const Carousel = ({
 
   const goToSlide = useCallback(
     (index: number) => {
+      autoplay && autoplayActions.reset();
       setCurrentIndex(() => {
         if (index >= mainItems.length) {
           setHasTransition(false);
@@ -119,14 +123,13 @@ const Carousel = ({
         return index;
       });
     },
-    [mainItems]
+    [autoplay, autoplayActions, mainItems]
   );
 
   useEffect(() => {
     if (autoplaySeconds * 1000 < autoplaySpeed) {
       return;
     }
-    autoplayActions.reset();
     goToSlide(currentIndex + 1);
   }, [
     currentIndex,
@@ -171,10 +174,9 @@ const Carousel = ({
 
   const handleThumbnailPress = useCallback(
     (index: number) => {
-      autoplay && autoplayActions.reset();
       goToSlide(index);
     },
-    [autoplay, autoplayActions, goToSlide]
+    [goToSlide]
   );
 
   const handleCarouselMouseEnter = useCallback(() => {
@@ -213,13 +215,18 @@ const Carousel = ({
               item={item}
               ratio={ratio}
               maxWidth={maxWidth}
-              {...(item.index === currentIndex && {
-                css: { filter: 'saturate(1)' },
-                onMouseEnter: handleCarouselMouseEnter,
-                onMouseLeave: handleCarouselMouseLeave,
-              })}
               onAddToCart={onAddToCart}
               onAddToFavorites={onAddToFavorites}
+              {...(item.index === currentIndex
+                ? {
+                    css: { filter: 'saturate(1)' },
+                    onMouseEnter: handleCarouselMouseEnter,
+                    onMouseLeave: handleCarouselMouseLeave,
+                  }
+                : {
+                    css: { cursor: 'pointer' },
+                    onClick: () => goToSlide(item.index),
+                  })}
             />
           ))}
         </Inner>
