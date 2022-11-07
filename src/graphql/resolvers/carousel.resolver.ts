@@ -1,13 +1,14 @@
 import { GraphQLYogaError } from '@graphql-yoga/node';
 import striptags from 'striptags';
-import type { GameProduct } from '@/types/game-product.type';
 
-export const carousels = async (
-  _parent: any,
-  { filter, sort }: any,
-  { supabase }: any,
-  _info: any
-) => {
+import type { GameProduct } from '@/types/game-product.type';
+import type { CarouselItem } from '@/types/carousel.type';
+
+const getCarousels = async (
+  supabase: any,
+  filter?: any,
+  sort?: any
+): Promise<CarouselItem[]> => {
   const { limit } = filter || {};
   const { field: fieldSort, order: orderSort } = sort || {
     field: 'created_at',
@@ -175,3 +176,10 @@ export const carousels = async (
     }
   });
 };
+
+export const carousels = (
+  _parent: any,
+  { filter, sort }: any,
+  { supabase }: any,
+  _info: any
+) => getCarousels(supabase, filter, sort);

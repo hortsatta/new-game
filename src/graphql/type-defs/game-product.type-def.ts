@@ -26,11 +26,6 @@ export const gameProductTypeDef = `
     name: String
   }
 
-  type Genre {
-    slug: String
-    name: String
-  }
-
   type EsrbRating {
     slug: String
     name: String
@@ -74,6 +69,7 @@ export const gameProductTypeDef = `
     limit: Int
     released: FilterInput
     tba: Boolean
+    ids: [ID]
   }
 
   input GameProductSortInput {

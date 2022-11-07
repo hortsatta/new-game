@@ -1,5 +1,7 @@
 import { carouselTypeDef } from './carousel.type-def';
+import { cartTypeDef } from './cart.type-def';
 import { gameProductTypeDef } from './game-product.type-def';
+import { genreTypeDef } from './genre.type-def';
 import { userAccountTypeDef } from './user-account.type-def';
 
 export const typeDefs = `
@@ -23,16 +25,22 @@ export const typeDefs = `
     lte: String
   }
 
+  ${genreTypeDef}
+
   ${gameProductTypeDef}
 
   ${userAccountTypeDef}
+
+  ${cartTypeDef}
 
   ${carouselTypeDef}
   
   type Query {
     userAvatars(filter: UserAvatarFilterInput): [UserAvatar]
     carousels(filter: CarouselFilterInput, sort: CarouselSortInput): [Carousel]
+    genres(sort: GenreSortInput): [Genre]
     gameProducts(filter: GameProductFilterInput, sort: GameProductSortInput): [GameProduct]
+    cart(filter: CartFilterInput): Cart
     currentUser(token: String): UserAccount
   }
 
@@ -42,3 +50,6 @@ export const typeDefs = `
     upsertUserAccount(data: UserAccountUpsertInput): UserAccount
   }
 `;
+
+// upsertCart
+// upsertCartItems

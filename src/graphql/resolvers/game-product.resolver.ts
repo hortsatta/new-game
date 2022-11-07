@@ -1,29 +1,48 @@
 import { GraphQLYogaError } from '@graphql-yoga/node';
+import { getGenres } from './genre.resolver';
+
 import type { Game } from '@/types/game.type';
 import type { GameProduct } from '@/types/game-product.type';
+import type { Genre } from '@/types/genre.type';
 
-export const gameProducts = async (
-  _parent: any,
-  { filter, sort }: any,
-  { supabase }: any,
-  _info: any
-) => {
-  const { limit, released: releasedFilter } = filter || {};
+const getGameProducts = async (
+  supabase: any,
+  filter?: any,
+  sort?: any
+): Promise<GameProduct[]> => {
+  const { limit, released: releasedFilter, ids: idsFilter } = filter || {};
   const { field: fieldSort, order: orderSort } = sort || {
     field: 'created_at',
     order: 'desc',
   };
 
-  const { data: gpData, error } = await supabase
+  let gameProductQuery = supabase
     .from('game_product')
     .select()
-    .is('is_active', true)
-    .order(fieldSort, { ascending: orderSort !== 'desc' })
-    .limit(limit || 1000);
+    .is('is_active', true);
+
+  if (idsFilter && idsFilter.length) {
+    gameProductQuery = gameProductQuery.in('id', idsFilter);
+  }
+
+  if (fieldSort) {
+    gameProductQuery = gameProductQuery.order(fieldSort, {
+      ascending: orderSort !== 'desc',
+    });
+  }
+
+  if (limit) {
+    gameProductQuery = gameProductQuery.limit(limit || 1000);
+  }
+
+  const { data: gpData, error } = await gameProductQuery;
 
   if (error) {
     throw new GraphQLYogaError(`Error: ${error.message}`);
   }
+
+  // Get all genres
+  const gameGenres = await getGenres(supabase);
 
   const gameIdsFlat = gpData.map((gp: any) => gp.game_id).flat();
   const gameIds = [...new Set(gameIdsFlat.map(JSON.stringify))].map(
@@ -32,7 +51,7 @@ export const gameProducts = async (
 
   const { data: gameData } = await supabase
     .from('game')
-    .select('id, slug, bg_image_offset_pos_x, backdrop_opacity')
+    .select('id, slug, genres, bg_image_offset_pos_x, backdrop_opacity')
     .is('is_active', true)
     .in('id', gameIds);
 
@@ -58,9 +77,12 @@ export const gameProducts = async (
           platforms,
           developers,
           publishers,
-          genres,
           esrb_rating,
         } = await res.json();
+
+        const genres = g.genres.map((genreId: number) =>
+          gameGenres.find((gg: Genre) => gg.id === genreId)
+        );
 
         return {
           id: g.id,
@@ -91,7 +113,7 @@ export const gameProducts = async (
             slug,
             name,
           })),
-          genres: genres.map(({ slug, name }: any) => ({ slug, name })),
+          genres,
           esrbRating: esrb_rating
             ? { slug: esrb_rating.slug, name: esrb_rating.name }
             : null,
@@ -102,7 +124,7 @@ export const gameProducts = async (
     })
   );
 
-  const gameProducts: GameProduct[] = gpData
+  return gpData
     .map(
       ({
         created_at,
@@ -155,6 +177,13 @@ export const gameProducts = async (
         ? +new Date(gbB.games[0].released) - +new Date(gbA.games[0].released)
         : +new Date(gbA.games[0].released) - +new Date(gbB.games[0].released);
     });
-
-  return gameProducts;
 };
+
+const gameProducts = (
+  _parent: any,
+  { filter, sort }: any,
+  { supabase }: any,
+  _info: any
+) => getGameProducts(supabase, filter, sort);
+
+export { getGameProducts, gameProducts };

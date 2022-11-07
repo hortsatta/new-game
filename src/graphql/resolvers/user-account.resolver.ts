@@ -5,32 +5,28 @@ import { serialize } from 'cookie';
 import type { NextApiResponse } from 'next';
 import type { AuthCredentials } from '@/types/auth.type';
 import type { FormData } from '@/components/user-account/user-info-form.component';
+import { UserAvatar } from '@/types/user-account.type';
 
 const stockUserAvatars = [
   {
     id: 1,
-    imageUrl:
-      'https://lsyyjunsfwfhanzmlkrt.supabase.co/storage/v1/object/public/new-game-bucket/avatar-1.png',
+    imageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_BUCKET_URL}/avatar-1.png`,
   },
   {
     id: 2,
-    imageUrl:
-      'https://lsyyjunsfwfhanzmlkrt.supabase.co/storage/v1/object/public/new-game-bucket/avatar-2.png',
+    imageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_BUCKET_URL}/avatar-2.png`,
   },
   {
     id: 3,
-    imageUrl:
-      'https://lsyyjunsfwfhanzmlkrt.supabase.co/storage/v1/object/public/new-game-bucket/avatar-3.png',
+    imageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_BUCKET_URL}/avatar-3.png`,
   },
   {
     id: 4,
-    imageUrl:
-      'https://lsyyjunsfwfhanzmlkrt.supabase.co/storage/v1/object/public/new-game-bucket/avatar-4.png',
+    imageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_BUCKET_URL}/avatar-4.png`,
   },
   {
     id: 5,
-    imageUrl:
-      'https://lsyyjunsfwfhanzmlkrt.supabase.co/storage/v1/object/public/new-game-bucket/avatar-5.png',
+    imageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_BUCKET_URL}/avatar-5.png`,
   },
 ];
 
@@ -86,29 +82,7 @@ const addAuthCookie = (res: NextApiResponse, token: string) => {
   );
 };
 
-const userAvatars = (
-  _parent: any,
-  { filter }: any,
-  _context: any,
-  _info: any
-) => {
-  const { ids } = filter || {};
-
-  if (!ids || !ids.length) {
-    return stockUserAvatars;
-  }
-
-  return stockUserAvatars.filter(
-    (avatar) => !!ids.find((id: number) => id === avatar.id)
-  );
-};
-
-const currentUser = async (
-  _parent: any,
-  { token }: { token: string },
-  { supabase, res }: any,
-  _info: any
-) => {
+const getCurrentUser = async (supabase: any, token: string) => {
   if (!token) {
     return null;
   }
@@ -124,6 +98,32 @@ const currentUser = async (
 
   return getUserAccountByUserId(supabase, user);
 };
+
+const getUserAvatars = (filter: any): UserAvatar[] => {
+  const { ids } = filter || {};
+
+  if (!ids || !ids.length) {
+    return stockUserAvatars;
+  }
+
+  return stockUserAvatars.filter(
+    (avatar) => !!ids.find((id: number) => id === avatar.id)
+  );
+};
+
+const userAvatars = (
+  _parent: any,
+  { filter }: any,
+  _context: any,
+  _info: any
+) => getUserAvatars(filter);
+
+const currentUser = (
+  _parent: any,
+  { token }: { token: string },
+  { supabase }: any,
+  _info: any
+) => getCurrentUser(supabase, token);
 
 const login = async (
   _parent: any,
