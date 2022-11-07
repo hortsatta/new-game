@@ -13,22 +13,22 @@ import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { BaseInput } from '@/components/base';
-import UserAvatarPicker from './user-avatar-picker.component';
+import { UserAvatarPicker } from './user-avatar-picker.component';
 
 import type { UserAvatar } from '@/types/user-account.type';
 
-type Props = {
-  userAvatars: UserAvatar[];
-  onSubmit: (data: FormData) => any;
-  loading?: boolean;
-  css?: CSS;
-};
-
-export type FormData = {
+type UserInfoFormData = {
   displayName: string;
   fullName: string;
   avatarType: number;
   avatarImage?: any;
+};
+
+type Props = {
+  userAvatars: UserAvatar[];
+  onSubmit: (data: UserInfoFormData) => any;
+  loading?: boolean;
+  css?: CSS;
 };
 
 const Form = styled('form', { w: '360px' });
@@ -54,7 +54,7 @@ const UserInfoForm = ({
   onSubmit,
   ...moreProps
 }: Props) => {
-  const methods = useForm<FormData>({
+  const methods = useForm<UserInfoFormData>({
     resolver: zodResolver(schema),
   });
 
@@ -162,4 +162,5 @@ const UserInfoForm = ({
   );
 };
 
-export default UserInfoForm;
+export { UserInfoForm };
+export type { UserInfoFormData };

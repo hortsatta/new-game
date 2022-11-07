@@ -20,7 +20,7 @@ const Header = styled('header', {
   transition: 'all 0.6s ease-in-out',
 });
 
-const CoreHeader = ({ isHome }: Props) => (
+export const CoreHeader = ({ isHome }: Props) => (
   <Header
     {...(isHome && {
       css: { py: '54px', w: 'calc(50% - 47px - 200px)', h: '56px' },
@@ -29,5 +29,3 @@ const CoreHeader = ({ isHome }: Props) => (
     <BaseSearch />
   </Header>
 );
-
-export default CoreHeader;

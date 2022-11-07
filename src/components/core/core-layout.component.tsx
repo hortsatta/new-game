@@ -2,9 +2,9 @@ import { ReactNode, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Row, styled } from '@nextui-org/react';
 
-import CoreHeader from './core-header.component';
-import CoreFooter from './core-footer.component';
-import CoreSide from './core-side.component';
+import { CoreHeader } from './core-header.component';
+import { CoreFooter } from './core-footer.component';
+import { CoreSide } from './core-side.component';
 
 const MainWrapper = styled('div', {
   pl: '100px',
@@ -16,7 +16,7 @@ const Main = styled('main', {
   w: '100%',
 });
 
-const CoreLayout = ({ children }: { children: ReactNode }) => {
+export const CoreLayout = ({ children }: { children: ReactNode }) => {
   const { pathname } = useRouter();
   const isHome = useMemo(() => pathname === '/', [pathname]);
 
@@ -31,5 +31,3 @@ const CoreLayout = ({ children }: { children: ReactNode }) => {
     </Row>
   );
 };
-
-export default CoreLayout;

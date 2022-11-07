@@ -21,7 +21,7 @@ const schema = z.object({
   password: z.string(),
 });
 
-const UserLoginForm = ({ loading, onSubmit, ...moreProps }: Props) => {
+export const UserLoginForm = ({ loading, onSubmit, ...moreProps }: Props) => {
   const {
     register,
     handleSubmit,
@@ -96,5 +96,3 @@ const UserLoginForm = ({ loading, onSubmit, ...moreProps }: Props) => {
     </Form>
   );
 };
-
-export default UserLoginForm;

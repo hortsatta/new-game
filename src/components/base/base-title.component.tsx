@@ -12,7 +12,7 @@ type Props = {
   children?: ReactNode;
 };
 
-const BaseTitle = ({ css, children, ...moreProps }: Props) => (
+export const BaseTitle = ({ css, children, ...moreProps }: Props) => (
   <Text
     css={{ ...{ fontSize: '18px', fontWeight: 500, opacity: 0.8 }, ...css }}
     h2
@@ -21,5 +21,3 @@ const BaseTitle = ({ css, children, ...moreProps }: Props) => (
     {children}
   </Text>
 );
-
-export default BaseTitle;

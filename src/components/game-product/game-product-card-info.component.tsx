@@ -98,7 +98,7 @@ const buttonCss = {
   minWidth: 'auto',
 };
 
-const GameProductCardInfo = ({
+export const GameProductCardInfo = ({
   gameProduct: { discount, price, finalPrice, games },
   onAddToCart,
   onAddToFavorites,
@@ -291,5 +291,3 @@ const GameProductCardInfo = ({
     </Outer>
   );
 };
-
-export default GameProductCardInfo;

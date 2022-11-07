@@ -15,13 +15,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { BaseInput, BaseInputPassword } from '@/components/base';
 import type { AuthCredentials } from '@/types/auth.type';
 
+type RegisterFormData = AuthCredentials & { confirmPassword: string };
+
 type Props = {
-  onSubmit: (data: FormData) => any;
+  onSubmit: (data: RegisterFormData) => any;
   loading?: boolean;
   css?: CSS;
 };
-
-export type FormData = AuthCredentials & { confirmPassword: string };
 
 const Form = styled('form', { w: '360px' });
 const gridCss = { w: '100%' };
@@ -42,7 +42,7 @@ const UserRegisterForm = ({ loading, onSubmit, ...moreProps }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<RegisterFormData>({
     resolver: zodResolver(schema),
   });
 
@@ -135,4 +135,5 @@ const UserRegisterForm = ({ loading, onSubmit, ...moreProps }: Props) => {
   );
 };
 
-export default UserRegisterForm;
+export { UserRegisterForm };
+export type { RegisterFormData };

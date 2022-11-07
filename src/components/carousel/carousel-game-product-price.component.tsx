@@ -8,7 +8,7 @@ type Props = {
 
 const Wrapper = styled('div', {});
 
-const CarouselGameProductPrice = ({ price, discount, css }: Props) => {
+export const CarouselGameProductPrice = ({ price, discount, css }: Props) => {
   const main = price.toString().split('.')[0];
   const cents = price.toString().split('.')[1];
 
@@ -49,5 +49,3 @@ const CarouselGameProductPrice = ({ price, discount, css }: Props) => {
     </Wrapper>
   );
 };
-
-export default CarouselGameProductPrice;

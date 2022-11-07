@@ -1,5 +1,5 @@
-export { default as Carousel } from './carousel.component';
-export { default as CarouselControls } from './carousel-controls.component';
-export { default as CarouselImageBackdrop } from './carousel-image-backdrop.component';
-export { default as CarouselItem } from './carousel-item.component';
-export { default as CarouselGameProductPrice } from './carousel-game-product-price.component';
+export * from './carousel.component';
+export * from './carousel-controls.component';
+export * from './carousel-image-backdrop.component';
+export * from './carousel-item.component';
+export * from './carousel-game-product-price.component';

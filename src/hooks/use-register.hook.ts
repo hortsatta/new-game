@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { gqlFetcher } from '@/utils/gql-fetcher.util';
-import type { FormData as RegisterFormData } from '@/components/user-account/user-register-form.component';
-import type { FormData } from '@/components/user-account/user-info-form.component';
+import type { RegisterFormData } from '@/components/user-account/user-register-form.component';
+import type { UserInfoFormData } from '@/components/user-account/user-info-form.component';
 
-type UserAccountFormData = FormData & { userId: string };
+type UserAccountFormData = UserInfoFormData & { userId: string };
 
 type Result = {
   loading: boolean;

@@ -28,7 +28,7 @@ const Button = styled('button', {
   '&:hover, &:active': { bg: 'transparent', opacity: 1 },
 });
 
-const HomeFeaturedGenresList = ({ genres, css }: Props) => {
+export const HomeFeaturedGenresList = ({ genres, css }: Props) => {
   const scrollbarRef = useRef<any>(null);
 
   const scrollList = (event: any, isBack = false) => {
@@ -78,5 +78,3 @@ const HomeFeaturedGenresList = ({ genres, css }: Props) => {
     </Section>
   );
 };
-
-export default HomeFeaturedGenresList;

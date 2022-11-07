@@ -56,7 +56,7 @@ const Inner = styled('div', {
   zIndex: 1,
 });
 
-const GenreCard = ({ genre, ...moreProps }: Props) => (
+export const GenreCard = ({ genre, ...moreProps }: Props) => (
   <Outer>
     <Inner {...moreProps}>
       <NextLink href={`/genres/${genre.slug}`} passHref>
@@ -90,5 +90,3 @@ const GenreCard = ({ genre, ...moreProps }: Props) => (
     </Inner>
   </Outer>
 );
-
-export default GenreCard;

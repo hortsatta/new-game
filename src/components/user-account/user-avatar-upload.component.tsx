@@ -35,7 +35,7 @@ const ImageUpload = ({ isDragging, ...moreProps }: { isDragging: boolean }) => (
   </Center>
 );
 
-const UserAvatarUpload = ({ css, ...moreProps }: Props) => {
+export const UserAvatarUpload = ({ css, ...moreProps }: Props) => {
   return (
     <ImageUploading {...moreProps} dataURLKey='data_url'>
       {({ imageList, onImageUpload, isDragging, dragProps }) => (
@@ -55,5 +55,3 @@ const UserAvatarUpload = ({ css, ...moreProps }: Props) => {
     </ImageUploading>
   );
 };
-
-export default UserAvatarUpload;

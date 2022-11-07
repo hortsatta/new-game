@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { Image, Row } from '@nextui-org/react';
 import { Controller, Noop, useFormContext } from 'react-hook-form';
 
-import UserAvatarUpload from './user-avatar-upload.component';
+import { UserAvatarUpload } from './user-avatar-upload.component';
 import type { UserAvatar } from '@/types/user-account.type';
 
 type Props = {
@@ -31,7 +31,7 @@ const css = {
   '&:hover': selectedCss,
 };
 
-const UserAvatarPicker = ({
+export const UserAvatarPicker = ({
   userAvatars,
   defaultSelectedIndex,
   onChange,
@@ -98,5 +98,3 @@ const UserAvatarPicker = ({
     </Row>
   );
 };
-
-export default UserAvatarPicker;

@@ -2,9 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CSS, styled } from '@nextui-org/react';
 import { useStopwatch } from 'react-timer-hook';
 
-import CarouselControls from './carousel-controls.component';
-import CarouselImageBackdrop from './carousel-image-backdrop.component';
-import CarouselItem from './carousel-item.component';
+import { CarouselControls } from './carousel-controls.component';
+import { CarouselImageBackdrop } from './carousel-image-backdrop.component';
+import { CarouselItem } from './carousel-item.component';
 import type { CarouselItem as CarouselItemType } from '@/types/carousel.type';
 
 type Props = {
@@ -40,7 +40,7 @@ const Inner = styled('div', {
   transition: 'transform 1s ease',
 });
 
-const Carousel = ({
+export const Carousel = ({
   items,
   ratio = 10 / 16,
   maxWidth = 'unset',
@@ -234,5 +234,3 @@ const Carousel = ({
     </Wrapper>
   );
 };
-
-export default Carousel;

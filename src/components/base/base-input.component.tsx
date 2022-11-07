@@ -11,5 +11,4 @@ const baseInputCss = {
 
 const BaseInput: any = styled(Input, baseInputCss);
 
-export { baseInputCss };
-export default BaseInput;
+export { baseInputCss, BaseInput };

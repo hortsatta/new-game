@@ -1,6 +1,6 @@
 import { CSS, styled } from '@nextui-org/react';
 
-import CartItem from './cart-item.component';
+import { CartItem } from './cart-item.component';
 import type { Cart } from '@/types/cart.type';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 
 const Wrapper = styled('div', {});
 
-const CartList = ({
+export const CartList = ({
   cart: { cartItems },
   onAddQuantity,
   ...moreProps
@@ -27,5 +27,3 @@ const CartList = ({
     ))}
   </Wrapper>
 );
-
-export default CartList;

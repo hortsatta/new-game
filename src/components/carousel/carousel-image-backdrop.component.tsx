@@ -47,7 +47,10 @@ const NextImage = styled(Image, {
   filter: 'blur(9px) saturate(0.75)',
 });
 
-const CarouselImageBackdrop = ({ currentIndex, carouselItems }: Props) => {
+export const CarouselImageBackdrop = ({
+  currentIndex,
+  carouselItems,
+}: Props) => {
   const currentImgSrc = useMemo(() => {
     const currentItem = carouselItems.find((ci) => ci.index === currentIndex);
 
@@ -82,5 +85,3 @@ const CarouselImageBackdrop = ({ currentIndex, carouselItems }: Props) => {
     </Wrapper>
   );
 };
-
-export default CarouselImageBackdrop;

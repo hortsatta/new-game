@@ -1,4 +1,4 @@
-export { default as UserAvatarPicker } from './user-avatar-picker.component';
-export { default as UserInfoForm } from './user-info-form.component';
-export { default as UserLoginForm } from './user-login-form.component';
-export { default as UserRegisterForm } from './user-register-form.component';
+export * from './user-avatar-picker.component';
+export * from './user-info-form.component';
+export * from './user-login-form.component';
+export * from './user-register-form.component';

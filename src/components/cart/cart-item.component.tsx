@@ -23,7 +23,7 @@ const buttonCss = {
   br: '8px',
 };
 
-const CartItem = ({
+export const CartItem = ({
   item: { gameProduct, quantity },
   onAddQuantity,
   onRemoveItem,
@@ -161,5 +161,3 @@ const CartItem = ({
     </Row>
   );
 };
-
-export default CartItem;

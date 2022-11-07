@@ -1,6 +1,6 @@
 import NextLink from 'next/link';
 import { styled, Image, Link, Text } from '@nextui-org/react';
-import GameProductCardInfo from './game-product-card-info.component';
+import { GameProductCardInfo } from './game-product-card-info.component';
 import type { GameProduct } from '@/types/game-product.type';
 
 type Props = {
@@ -83,7 +83,7 @@ const TitleWrapper = styled('div', {
   px: '20px',
 });
 
-const GameProductCard = ({ gameProduct, ...moreProps }: Props) => {
+export const GameProductCard = ({ gameProduct, ...moreProps }: Props) => {
   const { games } = gameProduct;
   const dev = games[0].developers[0]?.name || '';
   const pub = games[0].publishers[0]?.name || '';
@@ -159,5 +159,3 @@ const GameProductCard = ({ gameProduct, ...moreProps }: Props) => {
     </Outer>
   );
 };
-
-export default GameProductCard;

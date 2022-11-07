@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 import { Button, CSS, Image, Link, Row, styled, Text } from '@nextui-org/react';
 import { FlyingSaucer, Brain } from 'phosphor-react';
 
-import CarouselGameProductPrice from './/carousel-game-product-price.component';
+import { CarouselGameProductPrice } from './/carousel-game-product-price.component';
 import type { CarouselItem as CarouselItemType } from '@/types/carousel.type';
 
 type Props = {
@@ -85,7 +85,7 @@ const Right = styled('div', {
   alignItems: 'flex-end',
 });
 
-const CarouselItem = forwardRef(
+export const CarouselItem = forwardRef(
   (
     {
       item,
@@ -218,5 +218,3 @@ const CarouselItem = forwardRef(
 ) as any;
 
 CarouselItem.displayName = 'CarouselItem';
-
-export default CarouselItem;

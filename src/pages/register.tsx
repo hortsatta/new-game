@@ -11,8 +11,8 @@ import { BaseScene } from '@/components/base';
 import { UserInfoForm, UserRegisterForm } from '@/components/user-account';
 
 import type { NextPage } from 'next';
-import type { FormData as RegisterFormData } from '@/components/user-account/user-register-form.component';
-import type { FormData as UserInfoFormData } from '@/components/user-account/user-info-form.component';
+import type { RegisterFormData } from '@/components/user-account/user-register-form.component';
+import type { UserInfoFormData } from '@/components/user-account/user-info-form.component';
 
 const query = `
   query RegisterQuery {

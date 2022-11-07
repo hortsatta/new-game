@@ -1,1 +1,1 @@
-export { default as CoreLayout } from './core-layout.component';
+export * from './core-layout.component';

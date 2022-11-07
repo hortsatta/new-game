@@ -1,5 +1,5 @@
 import { CSS, Grid } from '@nextui-org/react';
-import GenreCard from './genre-card.component';
+import { GenreCard } from './genre-card.component';
 import type { Genre } from '@/types/genre.type';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
   wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | undefined;
 };
 
-const GenreList = ({ genres, itemCss, ...moreProps }: Props) => (
+export const GenreList = ({ genres, itemCss, ...moreProps }: Props) => (
   <Grid.Container gap={2} {...moreProps}>
     {genres.map((g: Genre) => (
       <Grid key={g.id} css={itemCss}>
@@ -19,5 +19,3 @@ const GenreList = ({ genres, itemCss, ...moreProps }: Props) => (
     ))}
   </Grid.Container>
 );
-
-export default GenreList;

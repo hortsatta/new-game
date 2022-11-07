@@ -30,7 +30,7 @@ const initialLinkCss = {
   },
 };
 
-const BaseNavLink = ({
+export const BaseNavLink = ({
   href,
   active,
   children,
@@ -63,5 +63,3 @@ const BaseNavLink = ({
     </NextLink>
   );
 };
-
-export default BaseNavLink;

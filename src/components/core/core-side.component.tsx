@@ -1,6 +1,6 @@
 import { styled } from '@nextui-org/react';
-import CoreLogo from './core-logo.component';
-import CoreNav from './core-nav.component';
+import { CoreLogo } from './core-logo.component';
+import { CoreNav } from './core-nav.component';
 
 const Aside = styled('aside', {
   position: 'fixed',
@@ -17,11 +17,9 @@ const Aside = styled('aside', {
   zIndex: 9,
 });
 
-const CoreSide = ({ ...moreProps }) => (
+export const CoreSide = ({ ...moreProps }) => (
   <Aside {...moreProps}>
     <CoreLogo width='60px' />
     <CoreNav />
   </Aside>
 );
-
-export default CoreSide;

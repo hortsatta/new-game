@@ -1,7 +1,7 @@
-import BaseInput from './base-input.component';
+import { BaseInput } from './base-input.component';
 import { Binoculars } from 'phosphor-react';
 
-const BaseSearch = () => (
+export const BaseSearch = () => (
   <div>
     <BaseInput
       aria-label='search'
@@ -13,5 +13,3 @@ const BaseSearch = () => (
     />
   </div>
 );
-
-export default BaseSearch;

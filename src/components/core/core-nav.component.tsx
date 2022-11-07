@@ -52,7 +52,7 @@ const iconProps = {
   weight: 'light' as IconWeight,
 };
 
-const CoreNav = ({ ...moreProps }) => {
+export const CoreNav = ({ ...moreProps }) => {
   const { asPath, isReady } = useRouter();
   const indicatorRef = useRef<any>(null);
   const [currentPathname, setCurrentPathname] = useState('/');
@@ -157,5 +157,3 @@ const CoreNav = ({ ...moreProps }) => {
     </Nav>
   );
 };
-
-export default CoreNav;

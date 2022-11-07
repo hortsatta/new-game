@@ -95,7 +95,7 @@ const SlideDuration = styled('div', {
   },
 });
 
-const CarouselControls = ({
+export const CarouselControls = ({
   items,
   currentIndex,
   autoplaySpeed,
@@ -153,5 +153,3 @@ const CarouselControls = ({
     </Wrapper>
   );
 };
-
-export default CarouselControls;

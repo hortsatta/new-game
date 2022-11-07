@@ -4,7 +4,7 @@ import { serialize } from 'cookie';
 
 import type { NextApiResponse } from 'next';
 import type { AuthCredentials } from '@/types/auth.type';
-import type { FormData } from '@/components/user-account/user-info-form.component';
+import type { UserInfoFormData } from '@/components/user-account/user-info-form.component';
 import { UserAvatar } from '@/types/user-account.type';
 
 const stockUserAvatars = [
@@ -173,7 +173,7 @@ const upsertUserAccount = async (
   _parent: any,
   {
     data: { avatarType, avatarImage, userId, displayName, fullName },
-  }: { data: FormData & { userId: string } },
+  }: { data: UserInfoFormData & { userId: string } },
   { supabase }: any,
   _info: any
 ) => {

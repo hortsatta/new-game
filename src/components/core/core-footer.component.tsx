@@ -2,7 +2,7 @@ import { Image, Row, Text } from '@nextui-org/react';
 
 const currentDate = new Date();
 
-const CoreFooter = () => (
+export const CoreFooter = () => (
   <Row css={{ mx: 'auto', py: '190px', w: 'fit-content', opacity: 0.6 }} fluid>
     <Image
       containerCss={{ m: 0, mr: '$5' }}
@@ -17,5 +17,3 @@ const CoreFooter = () => (
 are property of their respective owners in the US and other countries.`}</Text>
   </Row>
 );
-
-export default CoreFooter;
